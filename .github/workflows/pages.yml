@@ -63,7 +63,7 @@ jobs:
           test -f site/index.html
           test -f site/.nojekyll
           test -d site/assets
-          for path in .dev .github tools CLAUDE.md README.md .gitignore; do
+          for path in .dev .github tools AGENTS.md CLAUDE.md README.md .gitignore; do
             test ! -e "site/$path"
           done
           find site/.git -depth -delete
