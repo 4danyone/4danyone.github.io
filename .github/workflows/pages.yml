@@ -34,10 +34,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          case "$GITHUB_REPOSITORY" in
-            4danyone/4danyone.github.io|ant-research/4DAnyone) ;;
-            *) echo "Unsupported Pages target: $GITHUB_REPOSITORY" >&2; exit 1 ;;
-          esac
+          [[ "$GITHUB_REPOSITORY" == "4danyone/4danyone.github.io" ]] || {
+            echo "Unsupported Pages target: $GITHUB_REPOSITORY" >&2
+            exit 1
+          }
           [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
           [[ "$RELEASE_SHA" =~ ^[0-9a-f]{40}$ ]]
 
