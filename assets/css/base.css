@@ -1,0 +1,335 @@
+/* ==========================================================================
+   base.css — fonts, design tokens, reset, typography
+   Everything visual is driven by the custom properties below. Retheming the
+   page should not require touching any other file.
+   ========================================================================== */
+
+/* Lato, self-hosted so the page has no third-party dependency — same files
+   Google Fonts serves, copied into this repository.
+
+   Lato is not a variable font: only 400 and 700 are shipped here, so those are
+   the only two weights the page may use. Asking for 500/600 does not get you a
+   semibold, it silently rounds — 500 down to 400, anything above up to 700.
+   The latin-ext files are only fetched if the page uses those glyphs. */
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/lato-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/lato-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/lato-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/lato-latin-ext-700-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  /* --- surfaces ------------------------------------------------------------
+     One background for the whole page and a three-step grey ladder on top of
+     it, taken from Apple's dark theme. --surface-deep is the big blocks —
+     media frames, the code panel — and --surface is the controls sitting on or
+     near them: buttons, pills, tabs. Hover takes one more step up the same
+     ladder. Sections do not alternate — the page is uniformly black and the
+     rhythm comes from spacing alone. */
+  --bg: #000;
+  --surface-deep: #121214;
+  --surface: #1D1D1F;
+  --surface-hover: #2A2A2D;
+  --border: #424245;
+  --border-strong: #55555A;
+
+  /* --- text ---------------------------------------------------------------
+     Body copy is NOT muted: it sits at --text alongside headings, which is why
+     --text-muted reads as genuinely secondary rather than as "slightly dimmer
+     paragraph". Captions, footnotes and the footer are the muted tier.
+     Both greys sit one step lighter than the Apple originals they started as
+     (86868B / 6E6E73), which read too dark on this page's pure-black bg —
+     muted is now Apple's systemGray, faint keeps the same interval below. */
+  --text: #F5F5F7;
+  --text-muted: #8E8E93;
+  --text-faint: #76767B;
+
+  /* --- accents ------------------------------------------------------------
+     Two separate roles. --link is the interactive blue: links, focus rings, and
+     the active border on the step switcher. The --accent trio is decorative and
+     now has one job left, the hero title's gradient ramp — a fixed bloom behind
+     the page used them too, and read as a tint on what is meant to be black.
+     Retheming the page means changing both. */
+  --link: #3274D8;
+  --accent: #40A5EB;
+  --accent-soft: #6E85DF;
+  --accent-teal: #52BBB1;
+
+  /* The In the Wild title-band colours, mirrored by FLOW_LABELS in the mosaic
+     builder — a red, blue and teal lightened to caption weight against black.
+     Keep both copies together: these tokens record the page palette while the
+     renderer needs literal colours to burn into portable video pixels. */
+  --flow-source: #F7C3C5;
+  --flow-generated: #B3DBF7;
+  --flow-render: #BAE4E0;
+
+  /* --- type -------------------------------------------------------------- */
+  --font-sans: "Lato", ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* Fixed rem steps, not a fluid scale. Six discrete sizes, and the page title
+     sits only one step above a section title rather than towering over it.
+     --step--1 has no counterpart in that ladder; it is for page chrome (the
+     topbar, the small copy button) that owes nothing to the content scale. */
+  --step--2: 0.75rem;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem; /* 17px */
+  --step-1: 1.3125rem; /* 21px — the tagline tier, sized to its slot on Apple's
+     product pages (their "eyebrow"): one step of emphasis above body copy
+     without competing with a section title. */
+  --step-2: 2rem;
+  --step-3: 2.2rem;
+
+  /* Optical tracking, paired 1:1 with the steps above. Letterforms need less
+     air the larger they get and more the smaller they get, so tracking runs
+     from slightly positive at display sizes down to slightly negative at
+     reading size. Change a --step and you change its --track with it. */
+  --track-0: -0.01em;
+  --track-1: 0.011em;
+  --track-2: 0.004em;
+  --track-3: 0.003em;
+
+  /* --- rhythm ------------------------------------------------------------
+     One content width for the whole page — text, figures and video all share
+     the same left and right edge. There is no wide or narrow variant. */
+  --container: 60rem;
+  --gutter: clamp(1.1rem, 4vw, 2rem);
+  /* 96px → 160px. Generous on purpose: with this much air between sections a
+     divider rule becomes redundant, which is why the page has none. */
+  --section-gap: clamp(6rem, 10vw, 10rem);
+  /* What the two boundaries either side of the live Overview canvas use
+     instead. That section is one viewport with the scene framed inside it, so
+     it arrives carrying its own band of black at both edges and the full gap
+     lands on top of already-empty space. See layout.css. */
+  --stage-gap: clamp(1rem, 2vw, 1.5rem);
+
+  /* --- pipeline ----------------------------------------------------------
+     The interactive 3D section. Frustum states derive from --link because they
+     are interactive; the ground grid takes the decorative accent.
+
+     The skeleton is deliberately absent from this list. Its colours arrive in
+     assets/data/<scene>/skeleton.json and *mean* something — teal is the
+     subject's left, yellow their right, purple the torso cross-links — and
+     they are the same hues the conditioning videos are drawn with. Retinting
+     the skeleton to match the page would break the one correspondence the
+     section exists to demonstrate. */
+  /* Both frustum colours are lifted from the skeleton's own palette rather than
+     from --link, which is where they used to come from. The skeleton's colours
+     mean something — see the note above — and borrowing two of them ties the
+     cameras to the subject they are pointed at: the ring takes the blue of the
+     head joint, the one real camera takes the teal of the subject's left side.
+     A shared palette is what makes the ring and the figure read as one diagram
+     instead of a blue interface drawn around a coloured object.
+
+     Hover is a tint of the same blue rather than a separate hue, so the ladder
+     is brightness alone. A third, brighter step for the picked camera used to sit
+     here; picking says itself with line weight instead, and the token had been
+     read by nothing for some time. */
+  --frustum-idle: #74C0FC;
+  --frustum-hover: #A5D8FF;
+  /* The one real camera. Teal, so it is never mistaken for one of the
+     twenty-four — it is the only camera in the scene that existed. */
+  --frustum-input: #63E6BE;
+  --pipeline-grid: #26314A;
+
+  /* The one green on the page — a softened take on the platform's on-green,
+     picked by eye — used only by the autoplay switch's on state. Green
+     because a switch states on/off, not linkness: that is why this is not
+     --link. */
+  --switch-on: rgb(99 214 105);
+
+  /* --- surfaces detail --------------------------------------------------- */
+  --radius-media: 16px; /* video and figure frames */
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- reset ---------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* The page is black and has no light variant, and until this was here the
+     browser did not know that: every piece of UI it draws itself came out of
+     the light palette. The BibTeX block's scrollbar was the visible one — a
+     pale grey band across the bottom of a near-black panel — but the document
+     scrollbar and any form control would have read the same way. One
+     declaration, and native chrome follows the page. */
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  /* Keeps anchor targets clear of the pinned topbar (~3.4rem) instead of
+     letting headings land underneath it. A token because the pipeline section
+     has to cancel it — see `.pipeline` in layout.css — and two copies of the
+     number would drift the moment the topbar changes height. */
+  --anchor-offset: 5.5rem;
+  scroll-padding-top: var(--anchor-offset);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.47;
+  letter-spacing: var(--track-0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+/* Media is decorative here — dragging it out of the page is never intended. */
+img,
+video {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* --- typography ----------------------------------------------------------- */
+
+/* Headings tighten as they grow: line-height drops from 1.2 toward 1.1 and
+   tracking is set per step rather than shared. */
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.2;
+  text-wrap: balance;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--step-3);
+  line-height: 1.1;
+  letter-spacing: var(--track-3);
+}
+
+h2 {
+  font-size: var(--step-2);
+  line-height: 1.125;
+  letter-spacing: var(--track-2);
+}
+
+h3 {
+  font-size: var(--step-1);
+  letter-spacing: var(--track-1);
+}
+
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+ol,
+ul {
+  margin: 0 0 1em;
+  padding-left: 1.3em;
+}
+
+li + li {
+  margin-top: 0.5em;
+}
+
+/* --- accessibility -------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

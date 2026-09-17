@@ -1,0 +1,4322 @@
+{
+  "generator": ".dev/tools/build_in_the_wild.py",
+  "report": "/Users/jyd/outputs/fdlp/spascene/reports/20260717_fdao_stage2_sapiens2_tgt6src1frm25_rcp_dropout/epoch01-step003000/gvhmr/sapiens2/cam1to6to24/dense",
+  "ratings_updated_at": "2026-09-04T18:44:26.597Z",
+  "accepted_ratings": [
+    "excellent"
+  ],
+  "mosaic": {
+    "canvas": [
+      2064,
+      1048
+    ],
+    "gen": [
+      264,
+      480
+    ],
+    "big": [
+      532,
+      968
+    ],
+    "zone_gutter": 96,
+    "title_band": {
+      "height": 80,
+      "font": "Lato 400",
+      "font_size": 42,
+      "tracking_em": -0.01
+    },
+    "revision": "aba6ff504366605d",
+    "frames": 121,
+    "crf": 26,
+    "cas": 0.4
+  },
+  "pill": {
+    "width": 264,
+    "height": 480,
+    "crf": 30
+  },
+  "camera_sets": {
+    "180": [
+      16,
+      18,
+      20,
+      0,
+      2,
+      4
+    ],
+    "360": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20
+    ]
+  },
+  "groups": [
+    {
+      "label": "Featured",
+      "clips": [
+        "clip-7a76c49254",
+        "clip-e6293bcfa7",
+        "clip-cc7cf52003",
+        "clip-c0bd5b6cfc",
+        "clip-affbe73935",
+        "clip-7daed83dc2",
+        "clip-8971372c26",
+        "clip-fe6797e79f",
+        "clip-66de535122",
+        "clip-760197f096",
+        "clip-09e8722e34",
+        "clip-85e3354d60",
+        "clip-4b6d4be5b0",
+        "clip-d5e20cce12",
+        "clip-2a1e0d40bf",
+        "clip-4fb6188b41",
+        "clip-76da8ee8ac",
+        "clip-587c26d749",
+        "clip-0a22374d33",
+        "clip-e7c6b11412",
+        "clip-e6f4f69107",
+        "clip-0169794514",
+        "clip-658616a727",
+        "clip-6486e99aa1",
+        "clip-b32f80bd9f",
+        "clip-b3aa4f8f72",
+        "clip-311913036b",
+        "clip-e6497cad94",
+        "clip-68aa5db14b",
+        "clip-9afa0971f4",
+        "clip-ef306fc0ea",
+        "clip-74cf65ecec",
+        "clip-b86e7299cf",
+        "clip-eabb8951b4",
+        "clip-e02d1eb275",
+        "clip-008e703222",
+        "clip-2d7bd4f24a",
+        "clip-447050bc1d",
+        "clip-bb37a712c3",
+        "clip-2c693afb32",
+        "clip-b03ab4a16e",
+        "clip-10266a20f9",
+        "clip-10d7001964",
+        "clip-8b3cfbe12b",
+        "clip-32b9aaa0ce",
+        "clip-0a5226742c"
+      ]
+    },
+    {
+      "label": "Dance",
+      "clips": [
+        "clip-fe6797e79f",
+        "clip-66de535122",
+        "clip-76da8ee8ac",
+        "clip-e6f4f69107",
+        "clip-d5e20cce12",
+        "clip-0169794514",
+        "clip-760197f096",
+        "clip-4fb6188b41",
+        "clip-09e8722e34",
+        "clip-b061c86675",
+        "clip-85e3354d60",
+        "clip-6ee1f8f343",
+        "clip-e6293bcfa7",
+        "clip-206500d996",
+        "clip-e83d41cc29",
+        "clip-7a41476188",
+        "clip-c2f103b1ca",
+        "clip-b521a9dad7",
+        "clip-6e23659314",
+        "clip-0c86a5a6cc",
+        "clip-bddc628083",
+        "clip-e7c6b11412",
+        "clip-2cee756e2d",
+        "clip-79a0ffac23",
+        "clip-d7a67e1e61",
+        "clip-537a400a44",
+        "clip-fb922fc34b",
+        "clip-6357aa640b",
+        "clip-aafe117eb7",
+        "clip-99f6fe3553",
+        "clip-86a4f973bf",
+        "clip-b5516ba257",
+        "clip-4f26a08f3d",
+        "clip-a919c0067d",
+        "clip-0552144574",
+        "clip-64ff23433d",
+        "clip-52d1815002",
+        "clip-4dde5dd849",
+        "clip-42e1e673f5",
+        "clip-3b455cd72e",
+        "clip-49e6da1870",
+        "clip-cfb1a73821",
+        "clip-73f388887e",
+        "clip-24dea5eb1f",
+        "clip-b108ff0a6f",
+        "clip-f8d3896ad4",
+        "clip-3845643025",
+        "clip-b67ceca794",
+        "clip-16e2d9324a",
+        "clip-1c2e7e998e",
+        "clip-484f0cff5c",
+        "clip-008e703222",
+        "clip-af27c84ef0",
+        "clip-bb13515216",
+        "clip-b4f7edc197",
+        "clip-9b1ad228d2",
+        "clip-c09f0bffec",
+        "clip-a9ca9b6bca",
+        "clip-9dd95b9bda",
+        "clip-b42bdb235d",
+        "clip-8628a94549",
+        "clip-883e3b999b"
+      ]
+    },
+    {
+      "label": "Character",
+      "clips": [
+        "clip-c0bd5b6cfc",
+        "clip-affbe73935",
+        "clip-7daed83dc2",
+        "clip-658616a727",
+        "clip-8971372c26",
+        "clip-4b6d4be5b0",
+        "clip-8a7bf9280b",
+        "clip-90125cb945",
+        "clip-447050bc1d",
+        "clip-19da8156f6",
+        "clip-8fe318e434",
+        "clip-1189b4dffb",
+        "clip-f7c886b49e",
+        "clip-6a566e6458",
+        "clip-c0c2017697",
+        "clip-94a7a2c307",
+        "clip-640f3e8206",
+        "clip-00e12c7292",
+        "clip-eabb8951b4",
+        "clip-5a445425f4",
+        "clip-e3575402d9",
+        "clip-4d84dfaec9",
+        "clip-09a61aa528",
+        "clip-7777f26238",
+        "clip-94634c0573",
+        "clip-b6601d473d",
+        "clip-315b8b2fe8"
+      ]
+    },
+    {
+      "label": "Sports",
+      "clips": [
+        "clip-cc7cf52003",
+        "clip-ef306fc0ea",
+        "clip-9afa0971f4",
+        "clip-74cf65ecec",
+        "clip-3f85d26590",
+        "clip-b86e7299cf",
+        "clip-87daca7507",
+        "clip-1c530f759d",
+        "clip-e6497cad94",
+        "clip-68aa5db14b",
+        "clip-a3143f89b6",
+        "clip-fd0b1393ec",
+        "clip-6b46cdabbb",
+        "clip-d9317c4b07",
+        "clip-424acf608b",
+        "clip-132ab9a469",
+        "clip-785bcec500",
+        "clip-533645bbda",
+        "clip-db8a8fdbbe",
+        "clip-e02d1eb275",
+        "clip-27df362e84",
+        "clip-2cae3a7397",
+        "clip-cf1ca81131"
+      ]
+    },
+    {
+      "label": "Stage",
+      "clips": [
+        "clip-7a76c49254",
+        "clip-2a1e0d40bf",
+        "clip-060efaa0af",
+        "clip-de3a61149e",
+        "clip-7e61c5717a",
+        "clip-f307ed8575",
+        "clip-0a22374d33",
+        "clip-56d3addbe6",
+        "clip-9f6b02fdb9",
+        "clip-fa7fb15c47",
+        "clip-d8036a8ccd",
+        "clip-8b3dba948b",
+        "clip-b4b4a31ed1",
+        "clip-4a0b076726",
+        "clip-4d3a6c9d70",
+        "clip-b1ea861f33",
+        "clip-8b1f4103d5",
+        "clip-11eeb20c2c",
+        "clip-1d3a06c671",
+        "clip-3ec74f303d",
+        "clip-f7c3ccb132",
+        "clip-723277871c",
+        "clip-02191fa42b",
+        "clip-b8ba01cafe"
+      ]
+    },
+    {
+      "label": "Speech",
+      "clips": [
+        "clip-6486e99aa1",
+        "clip-b32f80bd9f",
+        "clip-b3aa4f8f72",
+        "clip-ec814ec5de",
+        "clip-485080dcb0",
+        "clip-eb5f380f61",
+        "clip-6430542596",
+        "clip-909a69fe98",
+        "clip-fc46bebd37",
+        "clip-1e462b38c8",
+        "clip-311913036b",
+        "clip-b027aded19"
+      ]
+    },
+    {
+      "label": "Fashion",
+      "clips": [
+        "clip-587c26d749",
+        "clip-2c36f8f213",
+        "clip-04d06eece7",
+        "clip-7d03fee6cf",
+        "clip-2d7bd4f24a",
+        "clip-75d7ac9a4b",
+        "clip-3b00887900",
+        "clip-955871822c",
+        "clip-376f9a0f0d",
+        "clip-93782332c9",
+        "clip-f00c0ec850",
+        "clip-1ca1df923d",
+        "clip-75f8fb8ceb",
+        "clip-33a23d21a8",
+        "clip-2c03519cb9",
+        "clip-e9f57b32a6",
+        "clip-6b12eebcef"
+      ]
+    },
+    {
+      "label": "Robot",
+      "clips": [
+        "clip-bb37a712c3",
+        "clip-10266a20f9",
+        "clip-10d7001964",
+        "clip-2c693afb32",
+        "clip-b03ab4a16e",
+        "clip-132ffc35fc",
+        "clip-32b9aaa0ce",
+        "clip-0a5226742c",
+        "clip-8b3cfbe12b"
+      ]
+    }
+  ],
+  "clips": [
+    {
+      "clip": "clip-7a76c49254",
+      "scene": "douyin/wayouli/7565494657385139505-seg000_30fps_start0350end0471",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "e353c2a92d538ba9",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-e6293bcfa7",
+      "scene": "douyin/wusan/7671567288083991860-seg000_30fps_start0127end0248",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "3837b25e4db2db34",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-cc7cf52003",
+      "scene": "youtube/brucelee/NlTyJhbTxxo-seg000_24fps_start0950end1071",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": true,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "bdb19126c452d150",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-c0bd5b6cfc",
+      "scene": "youtube/spiderman/x7yWprgWF_4-seg000_24fps_start3229end3350",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": true,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "88308d163a15814a",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-affbe73935",
+      "scene": "rednote/aria_lina/6a1eaec0000000002202355e-seg000_30fps_start0071end0192",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "9e8cb360cfeca0e0",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-7daed83dc2",
+      "scene": "douyin/aria_lina/7658697384268798180-seg000_30fps_start0086end0207",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "character_cinematic",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "d774e527733e40f0",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-8971372c26",
+      "scene": "douyin/shashengyuwan/7656371718100902842-seg000_30fps_start0000end0121",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "character_cinematic",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "54c071b97514f85b",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-fe6797e79f",
+      "scene": "douyin/jabbawockeez/7665963470898187570-seg000_30fps_start0248end0369",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "53bae557fc86f607",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-66de535122",
+      "scene": "douyin/xiaoshua/7651425137899752755-seg000_30fps_start0150end0271",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "3595c78aec3f834a",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-760197f096",
+      "scene": "douyin/marquesescott/7624510146537868559-seg000_30fps_start0202end0323",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "e6f100e839710838",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-09e8722e34",
+      "scene": "douyin/xiaoshua/7637519551348870451-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "2aee429aae02d035",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-85e3354d60",
+      "scene": "rednote/xiaoshua/6a1eae1b0000000006030c59-seg000_30fps_start0214end0335",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "ae28b0fe8da82c36",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-4b6d4be5b0",
+      "scene": "douyin/wujiaru/7666657019839568561-seg000_30fps_start0000end0121",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "character_cinematic",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "8ee7aef41aaf260a",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-d5e20cce12",
+      "scene": "douyin/gera/7624802455012703898-seg000_30fps_start0128end0249",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "b8326c4c6a90948d",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-2a1e0d40bf",
+      "scene": "douyin/liangbo/7614382876251831781-seg000_30fps_start0196end0317",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "ae89e09a64423c97",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-4fb6188b41",
+      "scene": "rednote/xiaoshua/663a2fb0000000001e02f816-seg000_30fps_start0054end0175",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "054652b872fa4d45",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-76da8ee8ac",
+      "scene": "douyin/wusan/7671196078925991208-seg000_30fps_start0550end0671",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "19b9fa8b88a014da",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-587c26d749",
+      "scene": "douyin/xiaoxiaoxiaozhao/7208115279887437093-seg000_30fps_start0323end0444",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "321767b3ea81b3a8",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-0a22374d33",
+      "scene": "rednote/karina/682a34b8000000002100ef62-seg000_30fps_start0833end0954",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "397cc12e8e2dd11d",
+      "ratings": {
+        "full": "poor",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-e7c6b11412",
+      "scene": "douyin/tianyiming/7661857557724179688-seg000_25fps_start0056end0177",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "aee258a6c44dfaca",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-e6f4f69107",
+      "scene": "douyin/karina/7460451494530125093-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "693c5e418a282b67",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-0169794514",
+      "scene": "douyin/yoona/7587354895821720875-seg001_30fps_start0560end0681",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "0345151ecf8ea6b5",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-658616a727",
+      "scene": "youtube/joker/c0EyFBPPuuY-seg000_24fps_start0710end0831",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "character_cinematic",
+      "main_demo": true,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "1417f9000b2d29d8",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-6486e99aa1",
+      "scene": "seedance/steve_jobs_timeislimited1",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "speech_presentation",
+      "main_demo": true,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "cc7614ee3d620b4e",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b32f80bd9f",
+      "scene": "youtube/samaltman/U9mJuUkhUzk-seg000_30fps_start15848end15969",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "speech_presentation",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "0cf25832157b1b35",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-b3aa4f8f72",
+      "scene": "youtube/feifeili/y8NtMZ7VGmU-seg000_24fps_start2065end2186",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "speech_presentation",
+      "main_demo": true,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "440217a0e8f84a48",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-311913036b",
+      "scene": "youtube/jensenhuang/11Y3B33oCLE-seg000_30fps_start0863end0984",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "speech_presentation",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "412ac0e75dacd8fe",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-e6497cad94",
+      "scene": "douyin/conormcgregor/7660365908967214363-seg001_30fps_start0675end0796",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "198a6d1cfa7dccbb",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-68aa5db14b",
+      "scene": "douyin/tatsurotaira/7636966032535538959-seg001_30fps_start0240end0361",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "cc924688d6c18dcb",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-9afa0971f4",
+      "scene": "douyin/zhangweili/7572019396625960219-seg000_30fps_start0850end0971",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "26b847048fdc391a",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-ef306fc0ea",
+      "scene": "douyin/songyadong/7598015155229691190-seg000_30fps_start0505end0626",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "ca419ad73c21c8ee",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-74cf65ecec",
+      "scene": "youtube/chris/bb_chris3-seg000_30fps_start0000end0121",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "46d0cf8041be1f0e",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b86e7299cf",
+      "scene": "seedance/kevin_durant_0",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": true,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "a49a675a142dd602",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-eabb8951b4",
+      "scene": "douyin/mumuchuanshan/7533204585377320244-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "4bac0e05f2459e36",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-e02d1eb275",
+      "scene": "douyin/yuanzhi/7667390368371793137-seg001_25fps_start0463end0584",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": true,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "3a9d97d9ae12038b",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-008e703222",
+      "scene": "pexels/6980035-uhd_2160_4096_30fps-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "571f24c775edae6b",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-2d7bd4f24a",
+      "scene": "pexels/10331522-uhd_2160_4096_25fps-seg000_25fps_start0074end0195",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": true,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "43122c33c156f909",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-447050bc1d",
+      "scene": "youtube/joker/joker_interview-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "b06163942bc15fec",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-bb37a712c3",
+      "scene": "douyin/engineait800/7661654915231858161-seg000_30fps_start0063end0184",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "robot",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "de2954b54d838003",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-2c693afb32",
+      "scene": "douyin/optimus/7504136084041780492-seg001_30fps_start0714end0835",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "robot",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "6db709de6c3cb5e2",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b03ab4a16e",
+      "scene": "douyin/unitree/7541313645260311865-seg000_30fps_start0069end0190",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "robot",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "9fd546caa0ce2737",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-10266a20f9",
+      "scene": "douyin/robotamu/7644650220941032314-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "robot",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "67120307f3b59ae9",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-10d7001964",
+      "scene": "douyin/unitree/7536849917004778778-seg000_30fps_start0350end0471",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "robot",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "65467653cb46a3ed",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-8b3cfbe12b",
+      "scene": "douyin/humanoidrobot/7663410560184219826-seg000_30fps_start0230end0351",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "robot",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "530d8821f7672265",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-32b9aaa0ce",
+      "scene": "douyin/xingjixiaomei/7370679330352958783-seg000_30fps_start0020end0141",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "robot",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "2efd9faddd541da4",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-0a5226742c",
+      "scene": "douyin/unitree/7657407585309429043-seg000_30fps_start0005end0126",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "robot",
+      "main_demo": true,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "ed77280b2442cfd8",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-b061c86675",
+      "scene": "douyin/xiaoshua/7641466975574576427-seg000_30fps_start0212end0333",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "979991edb3e2cb98",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-6ee1f8f343",
+      "scene": "douyin/xiaoshua/7647518334447013156-seg000_30fps_start0095end0216",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "bdff65e3692f74f1",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-206500d996",
+      "scene": "douyin/wusan/7670083094984117555-seg000_30fps_start0135end0256",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "b80993c148af97a2",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-e83d41cc29",
+      "scene": "douyin/xiaoshua/7658962546694556962-seg000_30fps_start0487end0608",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "b6cdf61adf696079",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-7a41476188",
+      "scene": "douyin/xiaoshua/7651628792678468914-seg000_30fps_start0477end0598",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "96717d5037284301",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-c2f103b1ca",
+      "scene": "douyin/gera/7547271413889273122-seg000_25fps_start0071end0192",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "8651272d82d10cf3",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-b521a9dad7",
+      "scene": "douyin/gera/7336154232501914943-seg000_25fps_start0077end0198",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "393797cbff9569be",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-6e23659314",
+      "scene": "douyin/wusan/7667114550994488602-seg000_30fps_start0152end0273",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "6af3d2cc4cc3db55",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-0c86a5a6cc",
+      "scene": "douyin/wusan/7671567288083991860-seg001_30fps_start0253end0374",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "233f31ab00124ceb",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-bddc628083",
+      "scene": "douyin/yoona/7587354895821720875-seg000_30fps_start0077end0198",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "e2811f2a04bb25a1",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-2cee756e2d",
+      "scene": "douyin/yuna/7671619032872948735-seg000_30fps_start0219end0340",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "902cb7c493c7a66f",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-79a0ffac23",
+      "scene": "douyin/kiki/7652044102390122661-seg000_30fps_start0020end0141",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "da897343512ae48d",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-d7a67e1e61",
+      "scene": "douyin/yuqi/7397069394758749440-seg000_30fps_start3352end3473",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "498a5190ebcb3a07",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-537a400a44",
+      "scene": "rednote/yuqi/6a093bcc000000000702c27b-seg000_30fps_start0478end0599",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "788db44bf24d2b45",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-fb922fc34b",
+      "scene": "bilibili/caixukun/BV1ct4y1n7t9-seg001_30fps_start0842end0963",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "fc93f9c6a734ccaa",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-6357aa640b",
+      "scene": "rednote/chuanup/6835b668000000000f038e64-seg000_25fps_start0033end0154",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "751f6bd1651d3536",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-aafe117eb7",
+      "scene": "rednote/chuanup/693c1bb6000000001b0226be-seg000_30fps_start0692end0813",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "ef242299187acca6",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-99f6fe3553",
+      "scene": "rednote/chuanup/69fdecef000000003601e47c-seg000_25fps_start0093end0214",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "ccbdaa48a2f2166b",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-86a4f973bf",
+      "scene": "rednote/chuanup/685176fb000000000303b80b-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "3bf7bcb33065882e",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b5516ba257",
+      "scene": "rednote/huanyi/6a4ce3a6000000001003e452-seg000_25fps_start0125end0246",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "2587746b998006a7",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-4f26a08f3d",
+      "scene": "rednote/huazeilei/6a5f530c000000000f02bb76-seg000_30fps_start0135end0256",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "94a76a0ca9bd678f",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-a919c0067d",
+      "scene": "douyin/luoyizhou/7597313802715241893-seg000_30fps_start0402end0523",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "031e094260832191",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-0552144574",
+      "scene": "bilibili/tianxinxin/BV14bq9BXE45-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "5d33cef5a27cb6e2",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-64ff23433d",
+      "scene": "bilibili/tianxinxin/BV1JeUhB3E8j-seg000_25fps_start0535end0656",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "97e429d79ee55b46",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-52d1815002",
+      "scene": "bilibili/tianxinxin/BV1rABEBmEfF-seg000_25fps_start0347end0468",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "4438fd8a65cd12bc",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-4dde5dd849",
+      "scene": "bilibili/tianxinxin/BV1UGwszMEqQ-seg000_25fps_start0105end0226",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "bf753fed999d5f49",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-42e1e673f5",
+      "scene": "douyin/yizhibeika/7636293416398468475-seg000_30fps_start0497end0618",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "a844649337d3d8cd",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-3b455cd72e",
+      "scene": "douyin/yizhibeika/7632309504318879987-seg000_30fps_start0083end0204",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "26322bf00eddab51",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-49e6da1870",
+      "scene": "douyin/xiatian/7663806118158573475-seg000_30fps_start0361end0482",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "eb167b59ef2bf749",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-cfb1a73821",
+      "scene": "douyin/sergejssinkins/7642666609622408548-seg000_30fps_start0408end0529",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "ab3c9208755f17ee",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-73f388887e",
+      "scene": "douyin/zhangweili/7592916253800735418-seg000_30fps_start0058end0179",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "5bb709d890679e4e",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-24dea5eb1f",
+      "scene": "douyin/winter/7617015006534495955-seg000_30fps_start0208end0329",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "4084d25309c21311",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b108ff0a6f",
+      "scene": "rednote/xiaoyang/6a155ba4000000000701115a-seg000_30fps_start0280end0401",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "a82bb8bb29d0c5b4",
+      "ratings": {
+        "full": "poor",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-f8d3896ad4",
+      "scene": "rednote/xiaoyang/6a2a75a600000000210096cb-seg000_30fps_start0123end0244",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "396793fbf2888702",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-3845643025",
+      "scene": "rednote/xiaoyang/6a4242e30000000022014f9b-seg000_30fps_start0170end0291",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "3638d5d15501de6d",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b67ceca794",
+      "scene": "douyin/jinchen/7563162253399493927-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "65f99aa4e4655d23",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-16e2d9324a",
+      "scene": "douyin/liujiaxi/7625932123564341876-seg000_30fps_start0020end0141",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "34d16a72dbdf3ca1",
+      "ratings": {
+        "full": "poor",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-1c2e7e998e",
+      "scene": "douyin/marquesescott/7680617651475593850-seg000_30fps_start0039end0160",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "14d35faeeebd3ecc",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-484f0cff5c",
+      "scene": "pexels/5390836-uhd_2160_4096_30fps-seg000_30fps_start0064end0185",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "1f86304821994f7e",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-af27c84ef0",
+      "scene": "pexels/7017803-hd_1080_1920_30fps-seg000_30fps_start0104end0225",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "9552707074504fa4",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-bb13515216",
+      "scene": "pexels/7080903-hd_1080_1920_30fps-seg000_30fps_start0073end0194",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "d909dc740625a895",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-b4f7edc197",
+      "scene": "pexels/7480858-uhd_2160_3840_25fps-seg000_25fps_start0536end0657",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "c49ff46b9913130f",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-9b1ad228d2",
+      "scene": "pexels/8929382-hd_1080_1920_30fps-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "f79d31d904dc6611",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-c09f0bffec",
+      "scene": "pexels/7716891-uhd_2160_4096_25fps-seg000_25fps_start0609end0730",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "284ce0f1c6f1c449",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-a9ca9b6bca",
+      "scene": "pexels/6003989-uhd_2160_3840_30fps-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "72c01372ef093dc2",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-9dd95b9bda",
+      "scene": "pexels/7341232-uhd_2160_3840_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "f427c68884cfdf06",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b42bdb235d",
+      "scene": "pexels/8027897-uhd_2160_3840_25fps-seg000_25fps_start0024end0145",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "ada6d712133b9e72",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-8628a94549",
+      "scene": "pexels/8628515-hd_1080_1920_25fps-seg000_25fps_start0125end0246",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "2d8337101bcef220",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-883e3b999b",
+      "scene": "pexels/5390224-uhd_2160_4096_30fps-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "dance_choreography",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "780f48b8d17e3db4",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-8a7bf9280b",
+      "scene": "youtube/spiderman/EgqyNam6bKg-seg000_30fps_start1103end1224",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "a3468fbcf934b4d3",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-90125cb945",
+      "scene": "youtube/joker/jAgGqQDv32k-seg000_24fps_start5643end5764",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "ef49e01baf20921c",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-19da8156f6",
+      "scene": "douyin/aria_lina/7655691801937355754-seg000_30fps_start0052end0173",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "8886ed1eb09714d3",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-8fe318e434",
+      "scene": "rednote/aria_lina/69a18d7b000000002602e9ec-seg000_30fps_start0123end0244",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "3e07f7b48fd9ad8f",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-1189b4dffb",
+      "scene": "rednote/aria_lina/6a1438c7000000003502e6f4-seg000_30fps_start0155end0276",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "88eb152e8252d109",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-f7c886b49e",
+      "scene": "douyin/aria_lina/7656013226044581366-seg000_30fps_start0161end0282",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "56ad428018776861",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-6a566e6458",
+      "scene": "douyin/shiba/7656386927856310257-seg000_30fps_start0117end0238",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "b786e1bfad4cc42d",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-c0c2017697",
+      "scene": "douyin/yuna/7667116298740958666-seg000_30fps_start0000end0121",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "442c88d9ce1afb0d",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-94a7a2c307",
+      "scene": "douyin/weilingying/7418885795995520282-seg000_30fps_start0040end0161",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "eb949e0d5bee62b7",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-640f3e8206",
+      "scene": "youtube/doctorstrange/9kLBkYoPs2o-seg000_30fps_start0543end0664",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "6d344aeb8d7d94e7",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-00e12c7292",
+      "scene": "youtube/doctorstrange/9kLBkYoPs2o-seg001_30fps_start3239end3360",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "0b65b34e898a0292",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-5a445425f4",
+      "scene": "douyin/obito/7594863630706741130-seg000_30fps_start0164end0285",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "e54d3471fd34ea1d",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-e3575402d9",
+      "scene": "douyin/xiaoyu/7662360780184726001-seg000_24fps_start0327end0448",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "fb7d98286e3bae7f",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-4d84dfaec9",
+      "scene": "youtube/lotr/eFbWU6c6r58-seg000_24fps_start7492end7613",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "1d0df1f7237ed880",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-09a61aa528",
+      "scene": "douyin/jinxuanhuangyuan/7546206474381348155-seg000_30fps_start0060end0181",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "f5cf0d19492fbf1e",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-7777f26238",
+      "scene": "pexels/5435720-uhd_2160_4096_25fps-seg000_25fps_start0050end0171",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "a50b09a945f771a1",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-94634c0573",
+      "scene": "pexels/5385965-uhd_2160_4096_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "f7e15192e6690431",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-b6601d473d",
+      "scene": "pexels/8160486-uhd_2160_3840_25fps-seg000_25fps_start0080end0201",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "80f1a2e67399fe2a",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-315b8b2fe8",
+      "scene": "pexels/8059623-hd_1080_1920_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "character_cinematic",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "433573a77225e945",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-3f85d26590",
+      "scene": "youtube/lebronjames/AypwtYRhqS8-seg000_30fps_start1719end1840",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "9acc102985241ba2",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-87daca7507",
+      "scene": "douyin/kevindurant/7149191606640381199-seg000_30fps_start1625end1746",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "2d7a430822f1b826",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-1c530f759d",
+      "scene": "douyin/stephencurry/7285746562557283640-seg000_30fps_start0096end0217",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "410ff78728128e8f",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-a3143f89b6",
+      "scene": "youtube/brucelee/wUx71EHIVKY-seg000_24fps_start9391end9512",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "24/1",
+      "audio": true,
+      "inputs": "c79afa0473b81c10",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-fd0b1393ec",
+      "scene": "douyin/tatsurotaira/7636966032535538959-seg000_30fps_start0027end0148",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "2c4e4d2359ad119a",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-6b46cdabbb",
+      "scene": "douyin/songyadong/7598015155229691190-seg001_30fps_start0843end0964",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "7973ee02847df358",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-d9317c4b07",
+      "scene": "douyin/kamaruusman/7663020569259986222-seg000_30fps_start0344end0465",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "eb4d9f2ff3fb073d",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-424acf608b",
+      "scene": "douyin/alexpereira/7398335215233404175-seg000_30fps_start0370end0491",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "f547fc69c3a99b61",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-132ab9a469",
+      "scene": "douyin/ufc/7437534701209799995-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "260a0382903a8234",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-785bcec500",
+      "scene": "douyin/ufc/7437534701209799995-seg001_30fps_start0273end0394",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "7fb2ea5fa42d919d",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-533645bbda",
+      "scene": "youtube/black_back/bb_black1-seg000_30fps_start0050end0171",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "cbfa11f4ba1ccf85",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-db8a8fdbbe",
+      "scene": "douyin/xiaoyaoguagua/7666494467809004846-seg000_30fps_start0000end0121",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "387f2475ee719698",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-27df362e84",
+      "scene": "douyin/yuanzhi/7669015584923487091-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "4a315627987e29e9",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-2cae3a7397",
+      "scene": "douyin/yuna/7623834698124381474-seg000_30fps_start0007end0128",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "e702e4cf58f5b331",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-cf1ca81131",
+      "scene": "pexels/2785536-uhd_2160_3840_25fps-seg000_25fps_start0020end0141",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "sports_action",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "a5e6cc8caf750f00",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-060efaa0af",
+      "scene": "douyin/maixiaodou/7667952492181989489-seg000_30fps_start0147end0268",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "5e6a563fd27f9b43",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-de3a61149e",
+      "scene": "douyin/jaychou/7521084289938803977-seg000_30fps_start0420end0541",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "928d51b43f4fbb6a",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-7e61c5717a",
+      "scene": "douyin/karina/7630454610519411968-seg001_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "5cce5c2cfd7171b1",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-f307ed8575",
+      "scene": "douyin/dengziqi/7527188690776689978-seg000_30fps_start0234end0355",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "1b58992ebcd449d2",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-56d3addbe6",
+      "scene": "douyin/karina/7671207965337152064-seg000_30fps_start0219end0340",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "a70009ae48bb6322",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-9f6b02fdb9",
+      "scene": "douyin/karina/7666559104424872571-seg001_30fps_start0531end0652",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "f50b304e83fa8cf1",
+      "ratings": {
+        "full": "poor",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-fa7fb15c47",
+      "scene": "douyin/karina/7671284451343104666-seg000_30fps_start0494end0615",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "2253b315faa9e46b",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-d8036a8ccd",
+      "scene": "rednote/xinling/69a2b005000000002203bc50-seg000_30fps_start0033end0154",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "1e98605e3ece1e81",
+      "ratings": {
+        "full": "excellent",
+        "front": "poor"
+      }
+    },
+    {
+      "clip": "clip-8b3dba948b",
+      "scene": "rednote/xinling/6a36a28d000000000f007b44-seg000_30fps_start0205end0326",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "d05006eccb94cc51",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-b4b4a31ed1",
+      "scene": "rednote/xinling/6a55f755000000001101623d-seg000_30fps_start0022end0143",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "36f001db481e3ef0",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-4a0b076726",
+      "scene": "douyin/xinling/7666505646174829513-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "004ec00945d13ad0",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-4d3a6c9d70",
+      "scene": "douyin/xinling/7602291565470762575-seg000_30fps_start0010end0131",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "a9072999a645c68e",
+      "ratings": {
+        "full": "poor",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b1ea861f33",
+      "scene": "douyin/yuqi/7470049049027169548-seg000_30fps_start1580end1701",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "8bd0df4062786da5",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-8b1f4103d5",
+      "scene": "douyin/yuqi/7417491655714016566-seg000_30fps_start2413end2534",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "55d8503d67cab046",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-11eeb20c2c",
+      "scene": "douyin/aaronkwok/7589247847007762411-seg000_25fps_start0053end0174",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": true,
+      "inputs": "623c0f9ffcdae853",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-1d3a06c671",
+      "scene": "douyin/angelazhang/7676880442771470335-seg001_30fps_start0010end0131",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "65406297318ff58e",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-3ec74f303d",
+      "scene": "douyin/maochuan/7646792594659407353-seg000_30fps_start3323end3444",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "29452ab6626b3997",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-f7c3ccb132",
+      "scene": "douyin/janezhang/7648114866913316136-seg000_30fps_start0348end0469",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "102aa45555d2fb78",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-723277871c",
+      "scene": "douyin/yuna/7420402076573846799-seg000_30fps_start0088end0209",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "572da3a6d6170e3e",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-02191fa42b",
+      "scene": "douyin/yuna/7553301843347606844-seg000_30fps_start0503end0624",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "38492880feb0315c",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-b8ba01cafe",
+      "scene": "douyin/yuna/7618947760523316506-seg001_30fps_start0692end0813",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "music_stage",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "df6b78bf38bb392d",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-ec814ec5de",
+      "scene": "youtube/jensenhuang/speech_jensen_huang_keynote_bade5a197bfc_121f-seg000_30fps_start0000end0121",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "speech_presentation",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "f9666c7d8f281915",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-485080dcb0",
+      "scene": "youtube/timcook/GYkq9Rgoj8E-seg001_30fps_start207286end207407",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "speech_presentation",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "b04991a9bd8319be",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-eb5f380f61",
+      "scene": "youtube/timcook/GYkq9Rgoj8E-seg003_30fps_start176168end176289",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "speech_presentation",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "e94bfb23b5250652",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-6430542596",
+      "scene": "youtube/timcook/GYkq9Rgoj8E-seg000_30fps_start32000end32121",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "speech_presentation",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "e1b8e54fb47a1230",
+      "ratings": {
+        "full": "excellent",
+        "front": "poor"
+      }
+    },
+    {
+      "clip": "clip-909a69fe98",
+      "scene": "youtube/robertdowneyjr/speech_robert_downey_jr_sbiff_tribute_acceptance_speech_9f0a262f9707_121f-seg000_30fps_start0000end0121",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "speech_presentation",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "1d52c3bf30527ae8",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-fc46bebd37",
+      "scene": "douyin/wuyanzu/7572873921628753152-seg000_30fps_start0020end0141",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "speech_presentation",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "b9ce0c8d30c0154b",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-1e462b38c8",
+      "scene": "youtube/timcook/GYkq9Rgoj8E-seg004_30fps_start179075end179196",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "speech_presentation",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "13dccd0866e2c934",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-b027aded19",
+      "scene": "youtube/elonmusk/speech_elon_musk_tesla_shareholder_speech_5cbda31bc0fc_121f-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "speech_presentation",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "3b8653e592064e90",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-2c36f8f213",
+      "scene": "douyin/karina/7636235583342125302-seg000_30fps_start0040end0161",
+      "view": "180",
+      "render": "render_4dgs_front",
+      "cameras": [
+        "gen_cam16",
+        "gen_cam18",
+        "gen_cam20",
+        "gen_cam00",
+        "gen_cam02",
+        "gen_cam04"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "d52c379b85814497",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-04d06eece7",
+      "scene": "pexels/15443888_1080_1920_100fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "443292ae6738e071",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-7d03fee6cf",
+      "scene": "dymvhuman/4K_Studios_Show_Single_f19/25-seg000_30fps_start0061end0182",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "d92e5edef6473e9f",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-75d7ac9a4b",
+      "scene": "dymvhuman/4K_Studios_Show_Single_f17/25-seg000_30fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "49ea9d362f24a9fa",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-3b00887900",
+      "scene": "pexels/5885633-hd_1080_1920_25fps-seg000_25fps_start0315end0436",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "44aa3e4f737cded4",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-955871822c",
+      "scene": "pexels/5999210-uhd_2160_4096_25fps-seg000_25fps_start0024end0145",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "c18671bfc29ee9b2",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-376f9a0f0d",
+      "scene": "pexels/8431510-uhd_2160_4096_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "dbb649743849912a",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-93782332c9",
+      "scene": "pexels/8151974-hd_1080_1920_30fps-seg000_30fps_start0017end0138",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": false,
+      "inputs": "5e089217f8be3af3",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-f00c0ec850",
+      "scene": "pexels/8798401-uhd_2160_4096_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "ff41e2f146b38532",
+      "ratings": {
+        "full": "poor",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-1ca1df923d",
+      "scene": "pexels/7761102-uhd_2160_4096_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "d7e645233cb8a8ae",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-75f8fb8ceb",
+      "scene": "pexels/6834067-hd_1080_1920_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "8444e8802d420adc",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-33a23d21a8",
+      "scene": "pexels/6616344-hd_1080_1920_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "ec50dcb7c059c2d7",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-2c03519cb9",
+      "scene": "pexels/6616348-hd_1080_1920_25fps-seg000_25fps_start0138end0259",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "1c75de335fa80dd8",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-e9f57b32a6",
+      "scene": "pexels/15514389_1080_1920_100fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "b43ac31a95fd2cec",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    },
+    {
+      "clip": "clip-6b12eebcef",
+      "scene": "pexels/6191453-uhd_2160_4096_25fps-seg000_25fps_start0000end0121",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "fashion_lifestyle",
+      "main_demo": false,
+      "fps": "25/1",
+      "audio": false,
+      "inputs": "37e31664e940a455",
+      "ratings": {
+        "full": "good",
+        "front": "excellent"
+      }
+    },
+    {
+      "clip": "clip-132ffc35fc",
+      "scene": "douyin/unitree/7559502724301524284-seg000_30fps_start0225end0346",
+      "view": "360",
+      "render": "render_4dgs",
+      "cameras": [
+        "gen_cam00",
+        "gen_cam04",
+        "gen_cam08",
+        "gen_cam12",
+        "gen_cam16",
+        "gen_cam20"
+      ],
+      "category": "robot",
+      "main_demo": false,
+      "fps": "30/1",
+      "audio": true,
+      "inputs": "b32d30ea393f32c1",
+      "ratings": {
+        "full": "excellent",
+        "front": "good"
+      }
+    }
+  ]
+}

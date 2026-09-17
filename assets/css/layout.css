@@ -1,0 +1,348 @@
+/* ==========================================================================
+   layout.css — page shell, ambient background, sections
+   ========================================================================== */
+
+/* --- containers ----------------------------------------------------------- */
+
+/* The only content width on the page. Deliberately has no --wide or --prose
+   variant: every section — prose, figures, video, the BibTeX block — shares one
+   left and right edge, so nothing reads as inset from what sits above it. */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* --- sections ------------------------------------------------------------- */
+
+.section {
+  padding-block: var(--section-gap);
+}
+
+/* Sections are separated by whitespace alone — no divider rule, and one
+   background for the whole page. `--section-gap` is wide enough that a
+   hairline would only restate what the gap already says.
+
+   Every section carries the gap on both sides, so neighbours would otherwise
+   stack two of them. Collapsing the top edge means one gap per boundary, which
+   is what the token is meant to express. The hero counts as a neighbour. */
+.hero + .section,
+.section + .section {
+  padding-top: 0;
+}
+
+/* Section heads carry the title alone — no eyebrow, no number, no restated
+   subtitle. The title is centred by default; a lead paragraph under it is
+   body copy and is always left-aligned. There is no --center variant any
+   more — it existed for one-line leads, the leads grew to two and three
+   lines, and centred prose has to be read from a different place on each
+   line. */
+/* 40px → 64px. A title needs more air under it than the 1em a paragraph gets,
+   or the first line of copy reads as its second line. */
+.section__head {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.section__head > h2 {
+  text-align: center;
+}
+
+/* Title flush left, aligned with the section's body copy. These heads carry
+   no lead, so without this the title floats a full head-margin above its first
+   paragraph while every lead section reads title-to-text at 1.5rem. Match that
+   distance instead. */
+.section__head--left {
+  margin-bottom: 1.5rem;
+}
+
+.section__head--left > h2 {
+  text-align: left;
+}
+
+/* Same argument, one step down: the lead is the first thing under the title,
+   so it takes most of that air even though the rest of the head's margin still
+   has to carry the gap to the body below. */
+.section__lead {
+  margin-top: 1.5rem;
+  color: var(--text);
+  font-size: var(--step-0);
+}
+
+/* …unless the body below is itself running text. A lead is body copy, and in
+   Method the paragraph after the head continues its sentence's argument — so
+   the seam between them is a paragraph break, the same 1em `p` carries, not
+   the media margin above. Heads followed by a frame or gallery keep that
+   margin; heads with no lead keep their title-to-text distance. */
+.section__head:has(.section__lead):has(+ .prose) {
+  margin-bottom: 1em;
+}
+
+
+/* --- generic helpers ------------------------------------------------------ */
+
+/* Restates the body colour on purpose: the "body copy is not muted" rule,
+   held as a guard rail where running text is marked as such. */
+.prose {
+  color: var(--text);
+}
+
+.caption {
+  margin-top: 1rem;
+  color: var(--text-muted);
+  font-size: var(--step-0);
+  /* Left, like all running text on the page. Captions were centred and were
+     the last centred prose standing once the leads went left — a centred
+     multi-line caption asks to be read from a different place on each line. */
+  text-align: left;
+  text-wrap: pretty;
+}
+
+/* Nothing fades in on scroll. There used to be a `.reveal` class that started
+   its element at opacity 0 and 1.25rem low and animated it into place as it
+   crossed the viewport; it was removed because it reads as an effect rather
+   than as the page, and because it costs a real thing — content that is only
+   visible if a script runs. What it left behind is the boot guard it needed
+   (an inline script adding `.js-reveal` to <html>, undone after 1500 ms if the
+   modules never loaded), the module that drove it, and the rule "never write
+   CSS that hides content unless .js-reveal is present". All of it is gone.
+   Sections now arrive by being scrolled to, which is what the section rhythm
+   above is for. */
+
+/* --- pipeline shell -------------------------------------------------------
+   The one place on the page that breaks --container, and deliberately: the
+   canvas is full-bleed because a 3 m camera ring cropped to 60rem stops
+   reading as a ring. Everything else in the section — the head above it, the
+   camera row and detail panel inside it — stays on the shared edge, so the
+   exception is the canvas and nothing else.
+
+   Exactly one viewport tall. It used to be four — one per act, with the canvas
+   sticking while the reader scrolled through them — but the steps are chosen
+   now rather than scrolled, so three viewports of scroll were buying nothing
+   and cost the reader three viewports of page. `--pipeline-acts` survives as
+   the one place to change that if the section ever wants scroll travel again.
+
+   It was briefly a scroll-snap target too. Snapping the section into place
+   sounds right for a full-screen scene and reads as the page grabbing at the
+   reader: `scroll-snap-type` can only go on the scroll container, so one
+   section's wish becomes every section's behaviour. */
+
+.pipeline {
+  position: relative;
+  margin-top: 2.5rem;
+  /* How many viewports the live stage stands. Declared here, not in the state
+     rules below, so the first-paint reservation and the booted stage read the
+     same number and can never disagree. */
+  --pipeline-acts: 1;
+}
+
+/* Every other section's box hugs its content, so --section-gap between two of
+   them is the whole gap and reads as one. This one's box does not: live, it is a
+   full viewport with the scene framed inside it, so it arrives with a band of
+   black above the title and another below the step switcher. The section gap
+   then lands on top of already-empty space and both boundaries come out at
+   roughly twice what every other boundary is — which is the doubling
+   `.section + .section` exists to prevent, arriving by a different route.
+
+   So the stage's own frame counts as the gap, and the three things that would
+   otherwise stack on it give back all but --stage-gap: the hero's bottom
+   padding, this element's top margin, and the section's bottom padding.
+
+   Keyed on the live class rather than the section, because it is the canvas
+   that brings the frame. Without one the fallback is a figure and a list of
+   videos, which is an ordinary section and spaces like one. :has() is doing the
+   parent selection; where it is missing the page simply keeps the old, roomier
+   spacing, which is a fair place to land. */
+.hero:has(+ .section > .pipeline.is-live),
+.hero:has(+ .section > .pipeline.is-booting) {
+  padding-bottom: var(--stage-gap);
+}
+
+.section:has(> .pipeline.is-live),
+.section:has(> .pipeline.is-booting) {
+  padding-bottom: var(--stage-gap);
+}
+
+/* The section's title, and the only heading it has.
+
+   In normal flow while there is no canvas, so the fallback reads as an ordinary
+   section. Once the canvas is live it is lifted over the top of the scene,
+   because the section is one snapped viewport and a heading sitting above that
+   viewport is never on screen at the same time as the thing it names — scroll to
+   the section and you land on a full screen of unlabelled 3D.
+
+   Cleared of the topbar by the same offset anchors use, so a reader who arrives
+   by clicking "Pipeline" does not find the title under the bar they clicked. */
+.pipeline__head {
+  position: relative;
+  z-index: 2;
+}
+
+.pipeline.is-live .pipeline__head,
+.pipeline.is-booting .pipeline__head {
+  position: absolute;
+  inset: 0 0 auto;
+  /* Clear of the topbar by the offset anchors use, plus a little: sitting at
+     the bare minimum left the title stranded at the very top of the frame with
+     a band of black between it and the scene it names. Nudged down a second
+     time for the same reason, which also evens the frame — the band this leaves
+     above the title is now about the one the step switcher leaves below it. */
+  padding-top: calc(var(--anchor-offset) + 3rem);
+  pointer-events: none;
+}
+
+/* A scrim, for the same reason the step cards have one: the brightness behind a
+   line of text is the scene's to decide, not the layout's, and the generated
+   views are full-frame photographs. */
+.pipeline.is-live .pipeline__head::before,
+.pipeline.is-booting .pipeline__head::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -3rem;
+  background: linear-gradient(
+    to bottom,
+    var(--bg),
+    color-mix(in srgb, var(--bg) 80%, transparent) 55%,
+    transparent
+  );
+}
+
+.pipeline__head > .container {
+  position: relative;
+}
+
+.pipeline__head h2 {
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Held from the moment WebGL starts loading, not from when it finishes, so the
+   page does not jump when the canvas arrives. */
+.pipeline.is-live,
+.pipeline.is-booting {
+  height: calc(var(--pipeline-acts) * 100vh);
+  /* The third of the three stacked gaps above. The margin is there to set the
+     fallback figure off from the hero; the stage sets itself off. */
+  margin-top: 0;
+}
+
+/* Held earlier still — from the first paint, before any script has arrived.
+   `is-booting` closes the jump between load-start and canvas, but on a
+   networked load there is a jump before it, between first paint and main.js
+   arriving, and no class can close that one because classes are what has not
+   arrived yet. `scripting: enabled` is the browser saying at parse time that
+   modules will run, so the frame and the gap give-backs are taken at once and
+   the boot happens inside a box that never moves.
+
+   The height is exact, not a floor. This block briefly said `min-height`, to
+   keep the fallback unclipped — but the fallback's video list is taller than
+   any viewport, so the floor never bound: the section arrived nearly two
+   viewports tall, wearing a grid of empty video boxes, and collapsed to one
+   the moment `is-booting` landed — the very jump this block exists to remove,
+   reached from the other side. So the classless window now looks like what it
+   is, the stage before its scene: final height, the title overlaid as it will
+   stay, an empty stage below it, and the whole fallback held back.
+
+   Holding the fallback back — the still and the video list both — is the one
+   deliberate breach of "never hide content", scoped to this window and argued
+   here. The fallback serves the reader who will never get a canvas;
+   `scripting: enabled` is the browser's parse-time word that modules will
+   run, and every path that then decides no canvas is coming after all — no
+   scene id, no WebGL2, a low-power device, a failed import or fetch, a stage
+   that later dies — stamps `is-static` (pipeline/index.js), which releases
+   everything here and returns the whole fallback with ordinary flow. The
+   window itself shows the empty stage, the overlaid title, and — once the
+   boot is really underway — the spinner-and-line chrome pipeline/index.js
+   creates; the scene's still was shown here first and read as a page stuck
+   on a picture rather than one loading a scene. The reader who loses the
+   fallback outright is the one whose main.js never executes at all on a
+   scripting-enabled load; they keep the title and the rest of the page, and
+   that narrow loss buys every other reader a section that never moves. A
+   browser with scripting off never matches the query, and one too old for it
+   keeps the old behaviour: the jump. */
+@media (scripting: enabled) {
+  .hero:has(+ .section > .pipeline[data-pipeline]:not(.is-static)) {
+    padding-bottom: var(--stage-gap);
+  }
+
+  .section:has(> .pipeline[data-pipeline]:not(.is-static)) {
+    padding-bottom: var(--stage-gap);
+  }
+
+  .pipeline[data-pipeline]:not(.is-static) {
+    height: calc(var(--pipeline-acts) * 100vh);
+    margin-top: 0;
+  }
+
+  /* The head takes its overlaid position from the first paint — the same
+     declarations the `.is-live` / `.is-booting` rules above apply — so the
+     classes arriving changes nothing the reader can see. */
+  .pipeline[data-pipeline]:not(.is-static) .pipeline__head {
+    position: absolute;
+    inset: 0 0 auto;
+    padding-top: calc(var(--anchor-offset) + 3rem);
+    pointer-events: none;
+  }
+
+  .pipeline[data-pipeline]:not(.is-static) .pipeline__head::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -3rem;
+    background: linear-gradient(
+      to bottom,
+      var(--bg),
+      color-mix(in srgb, var(--bg) 80%, transparent) 55%,
+      transparent
+    );
+  }
+
+  .pipeline[data-pipeline]:not(.is-static) .pipeline__views {
+    display: none;
+  }
+
+  /* The frame holds only the boot chrome: the fallback's still steps back
+     with the video list (the breach argued above), and the container stays a
+     centring flex box so the loading line pipeline/index.js inserts sits in
+     the middle of the stage. Nothing here draws a spinner of its own — the
+     spinner rides `.pipeline__loading` (components.css), which exists only
+     while a boot is really underway, so it can never outlive the load. */
+  .pipeline[data-pipeline]:not(.is-static) .pipeline__fallback {
+    height: 100%;
+    padding: calc(var(--anchor-offset) + 3rem) 0 1.5rem;
+  }
+
+  .pipeline[data-pipeline]:not(.is-static) .pipeline__fallback > .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pipeline[data-pipeline]:not(.is-static) .pipeline__fallback .figure {
+    display: none;
+  }
+}
+
+.pipeline__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.pipeline.is-live .pipeline__fallback {
+  display: none;
+}
+
+/* While the canvas is on its way, keep the figure and drop the video list. The
+   list is there for a reader who will never get a canvas; showing it for the
+   second before one appears just reads as a page that has not decided what it
+   is. If the boot fails, `is-booting` comes off and the list returns.
+
+   In a browser that supports the `scripting` query this is already true from
+   the first paint (the media block above); this rule is the mirror for one
+   that does not, where the hold can only start once `is-booting` lands. */
+.pipeline.is-booting .pipeline__views {
+  display: none;
+}

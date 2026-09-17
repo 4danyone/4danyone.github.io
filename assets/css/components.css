@@ -1,0 +1,1480 @@
+/* ==========================================================================
+   components.css — topbar, hero, buttons, media, tabs, gallery, code, footer
+   ========================================================================== */
+
+/* --- topbar ---------------------------------------------------------------
+   Hidden until the hero scrolls away, then a floating capsule slides down —
+   the shape Apple's product pages use for their local nav, and studied from
+   one before this was written. Two layers, as there: the fixed shell paints
+   nothing and only centres; the pill is the whole visible UI — detached from
+   the top edge, fully rounded, blurred translucent fill, and a one-pixel ring
+   drawn with box-shadow so it costs no layout. `.is-pinned` is toggled from
+   js/topbar.js, same contract as ever.
+   -------------------------------------------------------------------------- */
+
+.topbar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  /* A sliver off the top edge, not docked and not floating. On a notched
+     phone the inset alone would be the clearance — max(), never +, which is
+     how the pill once ended up twice as far down as the notch — though below
+     44rem the bar does not exist at all. */
+  padding: max(0.25rem, env(safe-area-inset-top, 0px)) var(--gutter) 0;
+  pointer-events: none;
+}
+
+.topbar__pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  /* The same arithmetic as .container's content box, so the bar's edges land
+     exactly on the page's text column. A rounded rectangle, not a capsule —
+     at full pill rounding a 60rem bar reads as a lozenge; --radius-media is
+     the page's big-block corner and this is a big block. */
+  width: 100%;
+  max-width: calc(var(--container) - var(--gutter) * 2);
+  padding: 0.35rem 0.5rem 0.35rem 0.9rem;
+  border-radius: var(--radius-media);
+  background: color-mix(in srgb, var(--bg) 65%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 0 0 0 1px var(--border);
+  opacity: 0;
+  /* Its own height plus the shell's padding, so it starts fully off screen
+     and arrives by sliding down — the reveal direction the reference uses. */
+  transform: translateY(calc(-100% - 1.5rem));
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease);
+  pointer-events: none;
+}
+
+.topbar.is-pinned .topbar__pill {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.topbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.topbar__brand:hover {
+  text-decoration: none;
+}
+
+.topbar__brand img {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.topbar__nav {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.topbar__nav::-webkit-scrollbar {
+  display: none;
+}
+
+/* Dimmer than body copy on purpose — otherwise the active pill, which is what
+   tells you where you are, has nothing to stand out against. */
+.topbar__link {
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-pill);
+  color: var(--text-faint);
+  font-size: var(--step--1);
+  font-weight: 400;
+  white-space: nowrap;
+  transition:
+    color 0.2s var(--ease),
+    background-color 0.2s var(--ease);
+}
+
+.topbar__link:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+  text-decoration: none;
+}
+
+.topbar__link.is-active {
+  color: var(--text);
+  background: var(--surface);
+}
+
+/* No bar on a phone. Six anchors in a scrollable strip was tried and did not
+   earn its screen space — on a small screen the reader scrolls, and the bar
+   only ever restated where they already were. The brand-name rule that used
+   to live here went with it. */
+@media (max-width: 44rem) {
+  .topbar {
+    display: none;
+  }
+}
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero {
+  /* max(), not +: the safe-area inset is the exact height of the notch zone,
+     so clearing it needs the larger of the two values, never their sum — the
+     sum pushed the title a full notch-height further than the notch. Ordinary
+     browsers see env() as 0 and get the clamp. */
+  padding-top: max(clamp(1.5rem, 5vw, 3.5rem), env(safe-area-inset-top, 0px));
+  padding-bottom: var(--section-gap);
+  text-align: center;
+}
+
+/* A flex item beside the title, spanning both of its lines: the em tracks the
+   h1's own size, and 2.2em is two lines at the h1's 1.1 line-height, so "equal
+   height" is written as arithmetic rather than eyeballed. */
+.hero__logo {
+  display: block;
+  width: auto;
+  height: 2em;
+  margin: 0;
+}
+
+/* Logo left, two lines of title right, centred as a pair. The text block is
+   left-aligned against the logo; the name keeps the gradient, the subtitle
+   keeps body colour and 400, and the explicit <br> holds the line break at the
+   phrase boundary. On a phone the pair restacks — see the media query below. */
+.hero__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.hero__title-text {
+  display: block;
+}
+
+/* Two <br> live in the subtitle and exactly one is real at a time. The wide
+   layouts break before "from"; the phone breaks after it, which evens the two
+   lines (24 and 24 characters) and is what lets the phone subtitle take a
+   larger step without folding to three. */
+.hero__br--narrow {
+  display: none;
+}
+
+.hero__title-main {
+  display: inline;
+  background: linear-gradient(
+    90deg,
+    var(--accent-soft) 0%,
+    var(--accent) 25%,
+    var(--accent-teal) 50%,
+    var(--accent) 75%,
+    var(--accent-soft) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-drift 8s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-drift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+.hero__title-sub {
+  display: inline;
+  color: var(--text);
+  /* The name carries the weight; the subtitle is the sentence after it. Lato
+     has no 500 — 400 is the other real weight. */
+  font-weight: 400;
+}
+
+/* The phone lockup keeps the desktop's left-right structure but restacks the
+   text: the name alone on its first line at --step-2 — the colon is horizontal
+   grammar and leaves when the run does — and the subtitle under it at
+   --step-0, two lines held by the <br>. --step-0 because the block sits beside
+   the logo: at --step-1 the long second line no longer fits the narrowed
+   column on a 390px screen and folds to three. */
+@media (max-width: 44rem) {
+  .hero__title {
+    gap: 0.7rem;
+  }
+
+  .hero__logo {
+    height: 4rem;
+  }
+
+  .hero__title-colon {
+    display: none;
+  }
+
+  .hero__br--wide {
+    display: none;
+  }
+
+  .hero__br--narrow {
+    display: inline;
+  }
+
+  /* The name keeps the h1's own --step-3; only the subtitle steps down. With
+     the balanced break the longer line is 24 characters, which is what lets
+     the subtitle ride at --step-1 beside a 4rem logo without folding. */
+  .hero__title-main {
+    display: block;
+    line-height: 1.15;
+  }
+
+  .hero__title-sub {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: var(--step-1);
+    letter-spacing: var(--track-1);
+    line-height: 1.3;
+  }
+}
+
+/* The teaser film under the title block. This was an inline
+   `style="margin-top: …"` on the element; a number in the markup is exactly
+   what the token rule exists to keep out of there. */
+.hero__teaser {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+/* --- authors -------------------------------------------------------------- */
+
+.authors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.2rem 1.15rem;
+  max-width: 44rem;
+  margin: 0 auto;
+  font-size: var(--step-1);
+  letter-spacing: var(--track-1);
+}
+
+.authors__item {
+  white-space: nowrap;
+}
+
+/* Author names read as links from the start rather than only on hover — the
+   whole row is clickable and nothing signals that if they render as body text. */
+.authors__item a {
+  color: var(--link);
+  text-decoration-color: transparent;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.2s var(--ease);
+}
+
+.authors__item a:hover {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}
+
+.authors sup {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--link);
+  margin-left: 0.1em;
+}
+
+/* An asterisk is already drawn high in the em box — it is a raised glyph by
+   design. Putting one in a <sup> raises and shrinks it a second time, which is
+   why it disappears next to a digit or a dagger. Size it back up and drop it
+   toward the superscript's own baseline. Stays inside the <sup> so it keeps
+   whatever colour that context gives its markers. */
+.mark-star {
+  font-size: 1.45em;
+  line-height: 0;
+  vertical-align: -0.18em;
+}
+
+.affiliations {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.2rem 1.15rem;
+  margin-top: 0.85rem;
+  color: var(--text);
+  font-size: var(--step-1);
+  letter-spacing: var(--track-1);
+}
+
+.affiliations sup {
+  color: var(--text);
+  font-weight: 700;
+  /* Same size as the authors' marks. Without this the browser default takes
+     over — `smaller` of the row's --step-1 — and the affiliation numbers come
+     out a step larger than the marks they answer to. */
+  font-size: 0.8rem;
+}
+
+/* Same row treatment as .affiliations above it, but a wider column gap: these
+   are two independent legends rather than items in one list, and at the
+   affiliation row's spacing they read as a single run-on line. */
+.footnote {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.2rem 2.75rem;
+  margin-top: 0.4rem;
+  color: var(--text-muted);
+  font-size: var(--step-0);
+}
+
+/* A line of text, not a badge. It was an uppercase pill with a --link border,
+   and among the buttons directly below it read as a fifth button nobody could
+   press; the venue is metadata, and it now dresses like the affiliation rows it
+   follows. The margin is small for the same reason — it belongs to the block of
+   names above it, not to the buttons below. */
+.venue {
+  display: inline-block;
+  margin-top: 0.6rem;
+  color: var(--text);
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: var(--track-1);
+}
+
+/* The metadata rows sit at body size on a phone — at --step-1 they compete
+   with the title block above them. The marks scale with their rows. This block
+   must follow the base rules above: it overrides them by source order, and an
+   earlier draft of it sat before them and silently lost. */
+@media (max-width: 44rem) {
+  .authors,
+  .affiliations,
+  .venue {
+    font-size: var(--step-0);
+    letter-spacing: var(--track-0);
+  }
+
+  .authors sup,
+  .affiliations sup {
+    font-size: 0.7rem;
+  }
+}
+
+/* --- buttons -------------------------------------------------------------- */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+}
+
+/* Dark fill, one step lighter border. Hover moves the two colours, never the
+   button — a pill that lifts under the cursor draws attention to the motion
+   rather than to the label, and a row of them ripples. There is no primary
+   variant: an accent-tinted fill on one of four reads as a stray highlight. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--step-0);
+  font-weight: 400;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+
+.button:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+  text-decoration: none;
+}
+
+.button__icon {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+  fill: currentColor;
+}
+
+/* The one centred caption: a short standalone hint under a video, not a
+   multi-line description — the argument for left-aligning captions was line
+   length, and a single line has no lines to re-find. */
+.caption--center {
+  text-align: center;
+}
+
+/* The teaser tagline — the page's one line at the tagline tier, --step-1.
+   The size step alone carries the emphasis: body colour was tried here and
+   pulled, so the line keeps the caption grey and stays in the caption's
+   voice. Size and tracking move as a pair, per the token rule. */
+.caption--tagline {
+  font-size: var(--step-1);
+  letter-spacing: var(--track-1);
+}
+
+/* Sits on top of the BibTeX block, which already carries `--surface` — a
+   filled button on a filled panel would disappear into it. */
+.button--ghost {
+  background: transparent;
+  color: var(--text);
+}
+
+.button--ghost:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.button--sm {
+  padding: 0.4rem 0.75rem;
+  font-size: var(--step--1);
+}
+
+/* --- media frames ---------------------------------------------------------
+   One shared frame for every video/figure so corner radius, border and drop
+   shadow stay consistent. `--ratio` sets the aspect box.
+   -------------------------------------------------------------------------- */
+
+/* No border, no inset highlight, no drop shadow: the media is a plain rounded
+   block floating on the background. Framing devices compete with the content
+   they frame, which matters most once real footage replaces the placeholders. */
+.frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--ratio, 16 / 9);
+  border-radius: var(--radius-media);
+  background: var(--surface-deep);
+}
+
+.frame > video,
+.frame > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Fullscreen undoes that crop. Inside the page, cover is safe — every
+   frame's --ratio matches its media exactly, so nothing is ever cut — but a
+   fullscreened element is screen-shaped, and cover there crops whatever the
+   screen is not: the in-the-wild mosaic (1432x1288) lost its top and bottom
+   rows to a 16:9 display. contain is the only honest fit once the reader
+   has said "show me this video": letterbox, never crop. Two rules, not one
+   selector list — an unrecognised pseudo-class would void the whole list. */
+video:fullscreen {
+  object-fit: contain;
+}
+
+video:-webkit-full-screen {
+  object-fit: contain;
+}
+
+/* A figure is not framed at all. `.frame--figure` used to sit here, matting the
+   pipeline diagram on `--surface` with a padded border — which is the framing
+   device the rule above exists to refuse, arrived at from the other direction.
+   The diagram is drawn on black and the page is black, so it needs no container
+   to sit in; anything drawn around it is a border with a longer name. */
+.figure {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- gallery (comparisons) ------------------------------------------------ */
+
+.gallery__thumbs {
+  display: grid;
+  /* auto-fit (not auto-fill) so a short scene list stretches to fill the row
+     rather than leaving empty tracks on the right. */
+  grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.gallery__thumbs li + li {
+  margin-top: 0;
+}
+
+/* Twelve across, an explicit count rather than `auto-fit`: the density is a
+   decision about how much wall a reader takes in at once, not a consequence of
+   whatever width the container happens to have. Every group is laid on the same
+   twelve columns, so the blocks line up with each other down the page.
+
+   A group's last row is short, and with a title above it that reads as how many
+   that group holds. It did not read that way when this was one undivided sheet,
+   which is what the explicit count was originally protecting against.
+
+   Twelve rather than the eight this started at, because the thumbnails are the
+   source video's shape now and a portrait frame is nearly twice as tall as the
+   square it replaced. At eight across a hundred-odd clips were three thousand
+   pixels of wall; at twelve it is under half that, and 80px is still wide enough
+   to tell one subject from another.
+
+   Eight and then four at the breakpoints, because twelve would put each
+   thumbnail under 3rem and they stop being legible as frames. */
+.gallery__thumbs--sheet {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+/* The source video's own aspect, so the sheet is a wall of the inputs rather
+   than of centre-crops of them. Scoped to this gallery — Comparisons runs 9:16,
+   which is the base class. */
+.gallery__thumbs--sheet .gallery__thumb {
+  aspect-ratio: 11 / 20;
+}
+
+/* One row under the frame: the caption reads from the left, the stage's one
+   option sits at the right — player chrome in the player's corner, not sheet
+   furniture. Baseline-aligned, at the caption's own size, so the two read as
+   one line of the same rank; on a narrow screen the caption wraps and the
+   option holds the first line. */
+.gallery__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+
+.gallery__meta .caption {
+  margin-top: 0; /* the row carries the spacing */
+}
+
+.gallery__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  color: var(--text-muted);
+  font-size: var(--step-0);
+  letter-spacing: var(--track-0);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* The option's control is a switch — the capsule-and-knob form of the theme
+   this page's greys come from — drawn in CSS on the native checkbox, which
+   stays a real checkbox underneath (role="switch" only changes what AT
+   announces), so gallery.js reads `.checked` exactly as before. Its on-state
+   fills with --switch-on: a switch states on/off, not linkness, and green is
+   the platform's own word for "on" — the token block says the rest.
+   Geometry: knob and travel derive from the 2.2em × 1.25em capsule with a
+   0.14em inset all round. */
+.gallery__switch,
+.pipeline__steps-switch {
+  position: relative;
+  flex: none;
+  width: 2.2em;
+  height: 1.25em;
+  margin: 0;
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+
+.gallery__switch::before,
+.pipeline__steps-switch::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0.14em;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 50%;
+  background: var(--text);
+  transform: translateY(-50%);
+  transition: transform 0.25s var(--ease);
+}
+
+.gallery__switch:checked,
+.pipeline__steps-switch:checked {
+  border-color: var(--switch-on);
+  background: var(--switch-on);
+}
+
+.gallery__switch:checked::before,
+.pipeline__steps-switch:checked::before {
+  transform: translate(0.88em, -50%);
+}
+
+/* --- the in-the-wild tabs: one tab per group, one panel per group ---------
+
+   The markup is written by .dev/tools/build_in_the_wild.py in tabs.js's contract,
+   and tabs.js does the switching and slides the indicator. The form is the
+   Overview step switcher's — a capsule platter with a pill that glides under
+   the active label, because moving is what says "positions in one control"
+   where a restyled label only says "a different button". Two divergences
+   from that platter, both because this row sits on the page's own black
+   rather than over a scene: the fill is solid --surface-deep instead of a
+   translucent blur (there is nothing behind it to see through to — and it
+   must sit two rungs under the indicator's --surface-hover, the air the
+   steps platter gives that same pill; at --surface the two greys were a
+   rung apart and read as one), and it runs the full content width, its
+   edges on the same line as the stage above and the sheet below, with the
+   seven tabs sharing it equally. Where equal shares would crush a label,
+   the rail holds its content size and the track scrolls instead.
+
+   Rounded rectangle, not capsule. The labels ride at --step-0 with the step
+   switcher's own padding — the two switchers speak in one type size, which
+   became affordable when the category names went single-word; at the earlier
+   multi-word labels this size crowded the row. The indicator and the buttons
+   take --radius-sm — the same corner, from the same token, as the pills on
+   the sheet below, because indicator and thumbnail are the same kind of
+   thing: a selected rounded tile. The platter wraps them at +4px, its own
+   padding, which is the concentric rule (outer = inner + inset) written as
+   a calc; the calc and the padding move together. */
+.gallery__tabs {
+  margin-top: 1.75rem;
+}
+
+.tabs__platter {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-sm) + 4px); /* concentric round the tiles */
+  background: var(--surface-deep);
+}
+
+/* Scrolls when seven labels are wider than the room. The fade lengths are
+   set by tabs.js, which is the only place that knows whether the row is
+   scrolled and which way; both zero collapses the mask to an opaque fill. */
+.tabs__track {
+  --fade-start: 0px;
+  --fade-end: 0px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start),
+    #000 calc(100% - var(--fade-end)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start),
+    #000 calc(100% - var(--fade-end)),
+    transparent 100%
+  );
+}
+
+.tabs__track::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs__rail {
+  position: relative;
+  /* Full width so equal flex shares have room to be equal; never narrower
+     than the labels, so a squeezed row scrolls instead of crushing one. */
+  width: 100%;
+  min-width: max-content;
+}
+
+/* The sliding pill. Width and offset come from tabs.js, which measures the
+   active tab — there is no CSS expression for "as wide as that word". Its
+   fill sits one rung above the platter's, the same relation the step
+   switcher holds: a held state, not a surface. */
+.tabs__indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--indicator-w, 0);
+  border-radius: var(--radius-sm); /* the pills' own corner */
+  background: var(--surface-hover);
+  transform: translateX(var(--indicator-x, 0));
+  transition:
+    transform 0.42s var(--ease),
+    width 0.42s var(--ease);
+}
+
+.tabs__list {
+  position: relative; /* the labels paint above the indicator */
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The buttons are the flex items — same box-deletion, same reason, as
+   .pipeline__steps-item below. The li already carries role="presentation". */
+.tabs__item {
+  display: contents;
+}
+
+.tabs__tab {
+  display: inline-flex;
+  flex: 1; /* basis 0, so the seven shares come out equal, not grown-equal */
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  padding: 0.5rem 0.95rem;
+  border: 0;
+  border-radius: var(--radius-sm); /* the pills' own corner */
+  background: none;
+  /* Muted, not faint: seven of these carry real words, and --text-faint on
+     the deep platter dropped below comfortable reading. Faint is for chrome
+     that may be dim; a label the reader must choose by is not that. */
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--step-0);
+  letter-spacing: var(--track-0);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.25s var(--ease);
+}
+
+.tabs__tab:hover {
+  color: var(--text);
+}
+
+.tabs__tab[aria-selected="true"] {
+  color: var(--text);
+}
+
+/* The glyph rides currentColor, so it dims, brightens and transitions with
+   the word it fronts — one state, said once. */
+.tabs__icon {
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  fill: currentColor;
+}
+
+.tabs__panel {
+  margin-top: 0.75rem;
+}
+
+/* Stacked spacing for the no-JS page, where every panel shows. */
+.tabs__panel + .tabs__panel {
+  margin-top: 2.75rem;
+}
+
+/* Once tabs.js is driving it stamps data-active on the shown panel; every
+   active panel then sits at the same distance under the row, whichever
+   sibling position it holds. Later than the rule above on purpose — equal
+   specificity, so order decides. */
+.tabs__panel[data-active] {
+  margin-top: 0.75rem;
+}
+
+.tabs__panel .gallery__thumbs {
+  margin-top: 0.75rem;
+}
+
+/* Left, unlike the section head above it. This labels the block underneath,
+   and a centred label floats free of the thing it names. It exists for the
+   no-JS page, where the panels stack and need naming; once tabs.js binds,
+   the selected tab is already saying the active panel's name, so the heading
+   stands down. Keyed on the attribute only JS ever sets, which is what keeps
+   the no-script page fully labelled — no content hidden waiting for a script
+   that never arrives. */
+.gallery__group-title {
+  text-align: left;
+}
+
+.tabs__panel[data-active] .gallery__group-title {
+  display: none;
+}
+
+@media (max-width: 64rem) {
+  .gallery__thumbs--sheet {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 44rem) {
+  .gallery__thumbs--sheet {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.gallery__thumb {
+  display: block;
+  position: relative; /* anchors the hover preview video */
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  /* Portrait, like everything these buttons hold. Comparisons pills carry a
+     9:16 crop of the clip's "ours" panel, cut to exactly this shape by
+     .dev/tools/split_comparisons.py, so the image shows edge to edge; the In the
+     Wild sheet overrides to the source videos' own 11:20. These were squares
+     when the thumbnails were placeholder tiles, and a square of a portrait
+     crop threw away half of it. */
+  aspect-ratio: 9 / 16;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    border-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  transition:
+    opacity 0.25s var(--ease),
+    transform 0.35s var(--ease);
+}
+
+.gallery__thumb:hover {
+  border-color: var(--border-strong);
+}
+
+.gallery__thumb:hover img {
+  opacity: 0.85;
+  transform: scale(1.06);
+}
+
+/* The looping preview gallery.js grows inside a pill that carries
+   data-preview — under the pointer or keyboard focus, and kept for the
+   selected pill. It sits over the still and fades in only once frames are
+   actually painting (`playing` adds .is-playing) — the still is the preview's
+   own first frame, so what the reader sees is the picture starting to move,
+   never a load. Scaled with the img underneath so the hover zoom does not
+   snap back the moment the video lands on top of it.
+
+   pointer-events is load-bearing, not hygiene: the preview must never be the
+   mousedown target, because gallery.js removes previews as focus and hover
+   move, and a browser whose pressed element leaves the DOM swallows the click
+   — which once cost every scene switch a second click. */
+.gallery__thumb-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+  pointer-events: none;
+}
+
+.gallery__thumb:hover .gallery__thumb-preview {
+  transform: scale(1.06);
+}
+
+.gallery__thumb-preview.is-playing {
+  opacity: 1;
+}
+
+/* The selected tile takes a 2px frame in --link — thicker as well as bluer.
+
+   A 1px hairline was what this started as, and it was missed: on the In the Wild
+   sheet the tile is about 72px wide among a hundred and sixty of the same
+   hairline in grey, so recolouring it changed the tile's colour without changing
+   its shape. Two things had to move for it to be found at a glance, which is why
+   the width moves too.
+
+   Known cost, accepted: the border is inside the box, so the selected picture is
+   cropped one pixel further on each side and its contents shift by that much
+   under the click that selected it. Putting 2px on every thumbnail avoids the
+   shift, and was tried — it thickens the grey frame around all hundred and sixty
+   of them, which is a worse trade for a pixel nobody sees move.
+
+   Two heavier marks were tried in between and are the ones not to go back to: a
+   3px ring outside the box, which reads as a frame competing with the picture,
+   and tinting the whole tile blue, which is legible and ugly. */
+.gallery__thumb[aria-pressed="true"] {
+  border-width: 2px;
+  border-color: var(--link);
+}
+
+.gallery__thumb[aria-pressed="true"] img {
+  opacity: 1;
+}
+
+/* --- the in-the-wild stage: one self-labelled mosaic --------------------- */
+
+/* The stage video is the three-zone mosaic built by
+   .dev/tools/build_in_the_wild.py — source | six generated views |
+   reconstruction. Its title band, rounded zones and flow arrows are all baked
+   into the file so a downloaded clip keeps its explanation. Keep this ratio
+   paired with the builder's CANVAS_W / CANVAS_H. */
+.gallery__frame {
+  --ratio: 2064 / 1048;
+}
+
+/* --- numbered method list ------------------------------------------------- */
+
+/* The pipeline figure sits below the prose that names its parts, so it needs
+   more air above it than the paragraph rhythm gives. This was an inline
+   `style="margin-top: 2rem"` on the element; a number in the markup is exactly
+   what the token rule exists to keep out of there. */
+.method__figure {
+  margin-top: 2rem;
+}
+
+/* --- code / bibtex -------------------------------------------------------- */
+
+.code {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-deep);
+}
+
+.code pre {
+  margin: 0;
+  padding: 1.25rem;
+  overflow-x: auto;
+  /* The one scrollbar on the page that is meant to be seen. The three pill
+     rows hide theirs (`scrollbar-width: none`) because a cut-off pill says
+     "more this way" by itself; the `author` field runs to 149 characters and
+     nothing else would tell a reader the entry continues past the right edge.
+     So it is styled rather than hidden: thin, the grey ladder's hover step for
+     the thumb, and no track, which leaves the panel's own surface showing
+     through. `color-scheme: dark` in base.css is what keeps it dark in
+     browsers without these two properties; no ::-webkit-scrollbar rules,
+     because defining one opts WebKit out of overlay scrollbars altogether and
+     that would leave a bar permanently parked in the panel. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-hover) transparent;
+  color: var(--text);
+  font-size: var(--step--2);
+  /* Monospace is already evenly spaced — body tracking would only break the
+     column alignment this block depends on. */
+  letter-spacing: normal;
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.code__copy {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+}
+
+/* --- footer --------------------------------------------------------------- */
+
+.footer {
+  /* No top padding of its own — the section above already ends in a full
+     section band, and the line sits close over the text it introduces. */
+  padding-block: 0 2rem;
+  color: var(--text-muted);
+  font-size: var(--step-0);
+  text-align: center;
+}
+
+/* The page's one divider, by request. On the paragraph rather than on the
+   footer or its container, so the line spans exactly the text column — the
+   container's box includes the gutters and a border there would overhang the
+   prose edge by a gutter each side. */
+.footer p {
+  margin: 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border);
+}
+
+/* --- pipeline ------------------------------------------------------------
+   Two states in one section. Without WebGL (or without JS, or on a low-power
+   device) the reader gets .pipeline__fallback: a figure and a plain list of
+   videos, which is ordinary markup and needs no help from here. With WebGL,
+   .pipeline__stage is inserted and the fallback is hidden by layout.css. */
+
+/* The figure is the scene's own render still — portrait, 704×1280 — and at
+   `.figure`'s full column width it would stand three viewports tall. Capped
+   and centred it reads as the poster it is, over the grid of videos. Centred
+   rather than flush left as a knowing exception to the one-edge rule: a
+   left-aligned cap reads as a mistake, and the boot state (layout.css)
+   centres it in the stage frame anyway, so the two states agree. In that
+   boot state layout.css's `max-width: 100%` outranks this cap and the flex
+   fit sets the real size. */
+.pipeline__fallback .figure {
+  max-width: 24rem;
+  margin-inline: auto;
+}
+
+.pipeline__views {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pipeline__views li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Grid rows own the rhythm here; base.css's list spacing would push every
+   video after the first half a line low and break the first row's alignment —
+   the same reset .gallery__thumbs carries. */
+.pipeline__views li + li {
+  margin-top: 0;
+}
+
+.pipeline__views video {
+  width: 100%;
+  aspect-ratio: 704 / 1280;
+  border-radius: var(--radius);
+  background: var(--surface-deep);
+}
+
+/* The boot's one piece of chrome — a spinner over one line — created by
+   pipeline/index.js only while three.js and the scene data are actually in
+   flight and removed on every exit, which is why nothing here hides or shows
+   it. The ring is the "something is happening" signal (a breathing line held
+   the job while the boot state showed the scene's still; alone on an empty
+   stage it read as too little); the global reduced-motion rule in base.css
+   pins the spin, and the ring parked mid-turn still reads as loading beside
+   the line's own word for it. */
+.pipeline__loading {
+  text-align: center;
+}
+
+.pipeline__loading::before {
+  content: "";
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 0 auto 0.9rem;
+  border: 2px solid var(--border);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: pipeline-loading-spin 0.9s linear infinite;
+}
+
+@keyframes pipeline-loading-spin {
+  to { transform: rotate(360deg); }
+}
+
+.pipeline__views .caption {
+  margin: 0;
+  text-align: left;
+}
+
+.pipeline__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pipeline__media-status {
+  display: flex;
+  align-items: center;
+  gap: var(--gutter);
+  margin: 0;
+  min-width: 0;
+}
+
+.pipeline__media-status[hidden],
+.pipeline__media-status button[hidden] {
+  display: none;
+}
+
+/* --- the picked camera's full-resolution view ----------------------------- */
+
+/* Left of the canvas, sharing act 1's slot — see stage.js. Right is the
+   timeline's side now. */
+.pipeline__panel {
+  position: absolute;
+  top: 50%;
+  left: max(var(--gutter), calc(50% - var(--container) / 2));
+  width: min(15rem, 22vw);
+  margin: 0;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.22s var(--ease);
+  pointer-events: none;
+}
+
+.pipeline__panel.is-visible {
+  opacity: 1;
+}
+
+.pipeline__panel-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 704 / 1280;
+  border-radius: var(--radius);
+  background: var(--surface-deep);
+}
+
+.pipeline__panel-caption {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+  font-size: var(--step--2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipeline__panel {
+    transition: none;
+  }
+}
+
+/* --- the step switcher ----------------------------------------------------
+   Four tabs in a pill under the scene, with one description below them.
+
+   It was a rail down the right, then a row of four cards. The cards showed all
+   four descriptions at once, which is three paragraphs competing with the one
+   the reader is on; a switcher gives that one the full width and turns the four
+   titles into a single control. The indicator slides between them, because
+   moving is what says "positions in a sequence" where four separate highlights
+   would only say "four buttons". */
+
+.pipeline__steps {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* The bottom padding is what lifts the whole cluster toward the scene it
+     belongs to. Anchored to the bottom edge it read as a separate strip along
+     the foot of the screen rather than as the caption to the picture above. */
+  padding: 4rem var(--gutter) clamp(3.5rem, 14vh, 9rem);
+}
+
+/* A scrim, because the brightness behind a line of text is the scene's to
+   decide, not the layout's — a generated view is a full-frame photograph. */
+.pipeline__steps::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--bg) 80%, transparent) 42%,
+    var(--bg) 86%
+  );
+  pointer-events: none;
+}
+
+/* A column at every width — the play control above the row, right-aligned —
+   and never wider than the page's text column. Side by side, four tabs plus
+   the control overran the content width on desktop; this is the arrangement
+   the phone always had, promoted, with the platter now spanning the column
+   the way the topbar's pill does. */
+.pipeline__steps-bar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: calc(var(--container) - var(--gutter) * 2);
+  margin-inline: auto;
+}
+
+/* Status shares the transport row, never the caption's absolute position.
+   Long failure messages may wrap without overlapping the description. */
+.pipeline__steps-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--gutter);
+}
+
+/* Same treatment as the topbar: a translucent, blurred plate. It is the page's
+   existing answer to "chrome sitting over content whose colour is not ours". */
+.pipeline__steps-platter {
+  min-width: 0;
+  /* The full content column; the row inside centres when it fits and scrolls
+     when it does not. */
+  width: 100%;
+  max-width: 100%;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+}
+
+/* Scrolls when four labels are wider than the viewport. No paddles: a row that
+   scrolls under the finger is the behaviour people already have, and the active
+   tab is scrolled into view on every change anyway.
+
+   What paddles were for — telling the reader there is more — is done by fading
+   the edge instead. The two lengths are set from JS, which is the only place
+   that knows whether the row is scrolled and which way, so a row that fits gets
+   no fade and a row scrolled to its end stops fading the end it has reached.
+   Both zero collapses the gradient to a plain opaque fill. */
+.pipeline__steps-track {
+  --fade-start: 0px;
+  --fade-end: 0px;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start),
+    #000 calc(100% - var(--fade-end)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start),
+    #000 calc(100% - var(--fade-end)),
+    transparent 100%
+  );
+}
+
+.pipeline__steps-track::-webkit-scrollbar {
+  display: none;
+}
+
+.pipeline__steps-rail {
+  position: relative;
+  /* Fills the track, so the first and last tab reach the platter's padding edge
+     and the end pills nest concentrically inside it — 4px of padding and 1px of
+     border all the way round. It used to be `max-content` centred by auto
+     margins, and the four labels come to 14px short of the column: that
+     leftover split into 7px at each end, so the gap beside the end pills was
+     12px against 5px above and below them, and two arcs at a constant 4px
+     offset read as off-centre because the straight run between them did not
+     match. `min-width: max-content` keeps a squeezed row scrolling from its
+     left edge rather than crushing a label — the same pair of declarations
+     `.tabs__rail` uses, and for the same reason. */
+  width: 100%;
+  min-width: max-content;
+}
+
+/* The sliding pill. Width and offset come from JS, which measures the active
+   tab — there is no CSS expression for "as wide as that word". */
+.pipeline__steps-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--indicator-w, 0);
+  border-radius: var(--radius-pill);
+  /* The selected step sits a rung above the controls' resting grey — it is a
+     held state, not a surface, and at --surface it sank into the platter. */
+  background: var(--surface-hover);
+  transform: translateX(var(--indicator-x, 0));
+  transition:
+    transform 0.42s var(--ease),
+    width 0.42s var(--ease);
+}
+
+.pipeline__steps-list {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The li generates no box at all, so the buttons are the flex items.
+
+   This is the fix for a row of four identical buttons that would not line up:
+   the first li measured 8.5px taller than the button inside it and the other
+   three set their baselines against it, leaving one tab higher than its
+   neighbours and every label riding above the centre of the pill. Making the li
+   a flex container, then stating the row's height, each moved the discrepancy
+   without removing it — the list-item box kept finding a way to contribute a
+   baseline. `display: contents` deletes the box outright, and four buttons with
+   identical structure have nothing left to disagree about.
+
+   Safe for the tablist: the li already carries `role="presentation"`, which is
+   the same claim in ARIA that this makes in CSS. */
+.pipeline__steps-item {
+  display: contents;
+}
+
+/* No transform on hover — the page's buttons change colour and stay put, and a
+   pill that lifts under the cursor advertises the motion instead of the label. */
+.pipeline__steps-tab {
+  display: flex;
+  /* Grow, from the natural width rather than from zero — `flex: 1` would hand
+     the four equal shares, which `.tabs__tab` wants and this row does not: the
+     indicator's width is the active label's width, and four identical cells
+     would leave it nothing to animate. So the column's spare 14px is shared
+     out as ~3.5px per tab, invisible in the padding, and both ends land flush.
+     No shrink, so an overflowing row scrolls at full label width. */
+  flex: 1 0 auto;
+  gap: 0.5rem;
+  /* Centred. It was baseline-aligned when the number was two steps smaller,
+     which put the pair high in a pill whose height came from the taller of the
+     two; they are the same size now and centring is simply true. */
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.95rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--text-faint);
+  font: inherit;
+  /* Reading size, not chrome size. These four are the section's own headings —
+     they name the steps of the method — and at --step--1 they read as a toolbar
+     rather than as the thing the section is about.
+
+     Which is also where the old `.tabs__button` sat — --step-0 at the
+     inherited 400 — when the Overview section gave the page a second switcher
+     (that block is gone; today's `.tabs__tab` keeps the same size). The label
+     was bold and was the only thing on the page claiming that a tab is a
+     heading. Selection is already said three times over: the pill behind it, the
+     number turning --link, and the label going from --text-faint to --text.
+     Weight was a fourth telling of it. */
+  font-size: var(--step-0);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.25s var(--ease);
+}
+
+.pipeline__steps-tab:hover {
+  color: var(--text-muted);
+}
+
+.pipeline__steps-tab[aria-selected="true"] {
+  color: var(--text);
+}
+
+.pipeline__steps-index {
+  color: var(--text-faint);
+  /* Same size as the label it belongs to — it inherits, so there is nothing to
+     keep in step. It was two steps down, which read as a superscript on the
+     title rather than as part of it. Colour still separates them. */
+  font-variant-numeric: tabular-nums;
+  transition: color 0.25s var(--ease);
+}
+
+.pipeline__steps-tab[aria-selected="true"] .pipeline__steps-index {
+  color: var(--link);
+}
+
+/* The countdown, under the active label rather than in a bar of its own: a
+   hairline along the bottom of the pill. One shared track below the row was
+   tried and read as a separate widget — it put the readout somewhere other than
+   the thing it counts down. A tint behind the label was tried before that and
+   was invisible, because quarter-opacity blue on a dark surface under white
+   text has nowhere to show. */
+.pipeline__steps-dwell {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 3px;
+  left: 0.6rem;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--link);
+  transform: scaleX(var(--dwell, 0));
+  transform-origin: left center;
+}
+
+/* The autoplay option: the same label-and-switch the In the Wild stage wears,
+   above the step row on its right edge — the DOM keeps platter-then-option for
+   focus order, so the lift is visual. The switch itself shares the gallery's
+   rules below; one control, one look, wherever "keep going on its own" is
+   offered. */
+.pipeline__steps-option {
+  display: inline-flex;
+  flex: none;
+  margin-left: auto;
+  align-items: center;
+  gap: 0.55em;
+  color: var(--text-muted);
+  font-size: var(--step-0);
+  letter-spacing: var(--track-0);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* One cell, four panels stacked in it. The container takes the height of the
+   tallest, so switching steps cannot make the page jump — and the outgoing and
+   incoming text occupy the same space, which is what lets them cross-fade
+   rather than replace each other. */
+.pipeline__steps-panels {
+  position: relative;
+  display: grid;
+  /* As wide as the switcher's text, not the platter around it: from the first
+     tab's numeral to the last tab's label, so the paragraph's edges sit under
+     the row of words the reader just read. steps.js measures and publishes
+     that length the way it does the indicator's — there is no CSS expression
+     for "the width of that text" — and until it arrives the content column
+     stands in. On a phone the row overflows and the measurement exceeds the
+     viewport, so the available width wins and the paragraph stays full-bleed
+     within the gutters, as before. */
+  max-width: min(
+    var(--steps-text-width, 100%),
+    calc(var(--container) - var(--gutter) * 2)
+  );
+  margin: 0.9rem auto 0;
+}
+
+.pipeline__steps-panel {
+  grid-area: 1 / 1;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--step-0);
+  /* Left, like every other paragraph on the page. Centred prose has to be read
+     from a different place on each line, which is a cost worth paying for one
+     line and not for three — and this one wraps to three on a phone. The block
+     itself stays centred under the switcher. */
+  text-align: left;
+  /* pretty — and it has earned the explicit line: normal and balance were
+     both tried here. balance shortened every line; normal filled the first
+     line but strands a word at other widths, and the captions change with
+     the step, so some width always loses. pretty's early first-line break is
+     the least strange of the three across all four bodies. */
+  text-wrap: pretty;
+  opacity: 0;
+  transform: translateY(0.35rem);
+  transition:
+    opacity 0.35s var(--ease),
+    transform 0.35s var(--ease);
+}
+
+.pipeline__steps-panel[data-active] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 52rem) {
+  .pipeline__steps {
+    padding-top: 3rem;
+    /* Sat closer to the scene here than on a wide viewport, because the viewport
+       is shorter and the cluster is taller — the pills wrap to a full-width row
+       and the description runs to three lines. Dropping it toward the bottom
+       edge buys back the separation the wide layout gets for free. */
+    padding-bottom: clamp(1.25rem, 4vh, 2.5rem);
+  }
+
+  .pipeline__steps-panel {
+    font-size: var(--step--1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipeline__steps-indicator,
+  .pipeline__steps-tab,
+  .pipeline__steps-index,
+  .pipeline__steps-panel {
+    transition: none;
+  }
+
+  .pipeline__steps-panel {
+    transform: none;
+  }
+}

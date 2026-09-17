@@ -1,0 +1,2643 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <!--
+    THIRD-PARTY ATTRIBUTION — not a TODO, and not decoration.
+
+    The handset in the pipeline section is "iPhone 17 Pro" by Ranguel, from
+    Sketchfab, licensed CC BY 4.0. It was pruned, resized, simplified and
+    quantized for the web — 8.92 MB to 246 KB.
+      https://sketchfab.com/3d-models/iphone-17-pro-4541aa8a28324b33a2baaf81d263aaec
+      https://creativecommons.org/licenses/by/4.0/
+
+    The scene renders with three.js r185, MIT, vendored under assets/js/vendor/.
+    The page sets Lato, SIL OFL 1.1, self-hosted under assets/fonts/. Its brand
+    and category icons come from Simple Icons (CC0) and Phosphor Icons (MIT).
+
+    Full notices, including the changes CC BY requires be stated, are in
+    THIRD-PARTY-NOTICES.md at the repository root.
+
+    This block is where the page's attribution lives, by decision: the credit is
+    not something a reader came here to read. It ships inside every copy of the
+    page, so it travels with the work. If the model is replaced, this goes with
+    it; until then it stays.
+  -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>4DAnyone: Create Anyone in 4D from a Casual Monocular Video</title>
+  <meta name="description" content="4DAnyone reconstructs 4D humans from an uncalibrated monocular video by generating reconstruction-grade multiview-consistent videos and lifting them into 4D Gaussian Splatting.">
+  <meta name="keywords" content="multiview video generation, 4D human reconstruction, 4D Gaussian Splatting, novel view synthesis">
+  <meta name="author" content="Yudong Jin, Tao Xie, Qihang Zhang, Zehong Shen, Zhen Xu, Yujun Shen, Hujun Bao, Xiaowei Zhou, Yinghao Xu">
+  <link rel="canonical" href="https://4danyone.github.io/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="4DAnyone">
+  <meta property="og:title" content="4DAnyone: Create Anyone in 4D from a Casual Monocular Video">
+  <meta property="og:description" content="4DAnyone reconstructs 4D humans from an uncalibrated monocular video by generating reconstruction-grade multiview-consistent videos and lifting them into 4D Gaussian Splatting.">
+  <meta property="og:url" content="https://4danyone.github.io/">
+  <meta property="og:image" content="https://4danyone.github.io/assets/images/social-card.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="4DAnyone turns a casually captured monocular video into generated multiview videos and a free-viewpoint volumetric video.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="4DAnyone: Create Anyone in 4D from a Casual Monocular Video">
+  <meta name="twitter:description" content="4DAnyone reconstructs 4D humans from an uncalibrated monocular video by generating reconstruction-grade multiview-consistent videos and lifting them into 4D Gaussian Splatting.">
+  <meta name="twitter:image" content="https://4danyone.github.io/assets/images/social-card.jpg">
+  <meta name="twitter:image:alt" content="4DAnyone turns a casually captured monocular video into generated multiview videos and a free-viewpoint volumetric video.">
+
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/images/logo.png">
+
+  <link rel="preload" href="assets/fonts/lato-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+
+  <!--
+    Resolves the one bare specifier in the vendored code. three.js's own
+    `GLTFLoader` imports from "three", and vendored files are kept byte-identical
+    to the published release, so the mapping goes here rather than into a patch.
+    Everything we write imports three by relative path and ignores this.
+  -->
+  <script type="importmap">
+    { "imports": { "three": "./assets/js/vendor/three.module.js" } }
+  </script>
+
+  <!--
+    The Overview boots with the page (pipeline/index.js), but a dynamic import
+    discovers these two only at the bottom of a stage.js → three.module.js →
+    three.core.js waterfall — and they are ~90% of the graph's bytes. Naming
+    them here starts both downloads at parse time, on a wire the teaser leaves
+    idle until the boot settles (teaser.js). Just these two: listing the
+    graph's small files would be a manifest to keep true for no visible gain.
+  -->
+  <link rel="modulepreload" href="assets/js/vendor/three.module.js">
+  <link rel="modulepreload" href="assets/js/vendor/three.core.js">
+
+  <script type="module" src="assets/js/main.js"></script>
+</head>
+
+<body>
+
+  <!-- Icon sprite: same-document <use> references, so no extra request and no
+       icon font. Add new glyphs as additional <symbol> elements. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <!-- Brand glyphs from Simple Icons, CC0 1.0, commit 34c22501. -->
+    <symbol id="i-arxiv" viewBox="0 0 24 24">
+      <path d="M3.8423 0a1.0037 1.0037 0 0 0-.922.6078c-.1536.3687-.0438.6275.2938 1.1113l6.9185 8.3597-1.0223 1.1058a1.0393 1.0393 0 0 0 .003 1.4229l1.2292 1.3135-5.4391 6.4444c-.2803.299-.4538.823-.2971 1.1986a1.0253 1.0253 0 0 0 .9585.635.9133.9133 0 0 0 .6891-.3405l5.783-6.126 7.4902 8.0051a.8527.8527 0 0 0 .6835.2597.9575.9575 0 0 0 .8777-.6138c.1577-.377-.017-.7502-.306-1.1407l-7.0518-8.3418 1.0632-1.13a.9626.9626 0 0 0 .0089-1.3165L4.6336.4639s-.3733-.4535-.768-.463zm0 .272h.0166c.2179.0052.4874.2715.5644.3639l.005.006.0052.0055 10.169 10.9905a.6915.6915 0 0 1-.0072.945l-1.0666 1.133-1.4982-1.7724-8.5994-10.39c-.3286-.472-.352-.6183-.2592-.841a.7307.7307 0 0 1 .6704-.4401Zm14.341 1.5701a.877.877 0 0 0-.6554.2418l-5.6962 6.1584 1.6944 1.8319 5.3089-6.5138c.3251-.4335.479-.6603.3247-1.0292a1.1205 1.1205 0 0 0-.9763-.689zm-7.6557 12.2823 1.3186 1.4135-5.7864 6.1295a.6494.6494 0 0 1-.4959.26.7516.7516 0 0 1-.706-.4669c-.1119-.2682.0359-.6864.2442-.9083l.0051-.0055.0047-.0055z" />
+    </symbol>
+    <symbol id="i-github" viewBox="0 0 24 24">
+      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+    </symbol>
+    <symbol id="i-huggingface" viewBox="0 0 24 24">
+      <path d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.15.257.212.468.233.542.01.026.653 1.552 1.657 2.54.616.605 1.01 1.223 1.082 1.912.055.537-.096 1.059-.38 1.572.637.121 1.294.187 1.967.187.657 0 1.298-.063 1.921-.178-.287-.517-.44-1.041-.384-1.581.07-.69.465-1.307 1.081-1.913 1.004-.987 1.647-2.513 1.657-2.539.021-.074.083-.285.233-.542.09-.154.208-.323.4-.467a1.08 1.08 0 0 1 .787-.203c.359.056.604.29.762.543s.247.55.265.874v.015c.225-.34.457-.67.683-.952.23-.286.432-.52.71-.694.257-.16.547-.284.84-.285a.97.97 0 0 1 .524.151c.228.143.373.388.43.625l.006.04a10.3 10.3 0 0 0 .534-3.273c0-5.731-4.678-10.378-10.449-10.378M8.327 6.583a1.5 1.5 0 0 1 .713.174 1.487 1.487 0 0 1 .617 2.013c-.183.343-.762-.214-1.102-.094-.38.134-.532.914-.917.71a1.487 1.487 0 0 1 .69-2.803m7.486 0a1.487 1.487 0 0 1 .689 2.803c-.385.204-.536-.576-.916-.71-.34-.12-.92.437-1.103.094a1.487 1.487 0 0 1 .617-2.013 1.5 1.5 0 0 1 .713-.174m-10.68 1.55a.96.96 0 1 1 0 1.921.96.96 0 0 1 0-1.92m13.838 0a.96.96 0 1 1 0 1.92.96.96 0 0 1 0-1.92M8.489 11.458c.588.01 1.965 1.157 3.572 1.164 1.607-.007 2.984-1.155 3.572-1.164.196-.003.305.12.305.454 0 .886-.424 2.328-1.563 3.202-.22-.756-1.396-1.366-1.63-1.32q-.011.001-.02.006l-.044.026-.01.008-.03.024q-.018.017-.035.036l-.032.04a1 1 0 0 0-.058.09l-.014.025q-.049.088-.11.19a1 1 0 0 1-.083.116 1.2 1.2 0 0 1-.173.18q-.035.029-.075.058a1.3 1.3 0 0 1-.251-.243 1 1 0 0 1-.076-.107c-.124-.193-.177-.363-.337-.444-.034-.016-.104-.008-.2.022q-.094.03-.216.087-.06.028-.125.063l-.13.074q-.067.04-.136.086a3 3 0 0 0-.135.096 3 3 0 0 0-.26.219 2 2 0 0 0-.12.121 2 2 0 0 0-.106.128l-.002.002a2 2 0 0 0-.09.132l-.001.001a1.2 1.2 0 0 0-.105.212q-.013.036-.024.073c-1.139-.875-1.563-2.317-1.563-3.203 0-.334.109-.457.305-.454m.836 10.354c.824-1.19.766-2.082-.365-3.194-1.13-1.112-1.789-2.738-1.789-2.738s-.246-.945-.806-.858-.97 1.499.202 2.362c1.173.864-.233 1.45-.685.64-.45-.812-1.683-2.896-2.322-3.295s-1.089-.175-.938.647 2.822 2.813 2.562 3.244-1.176-.506-1.176-.506-2.866-2.567-3.49-1.898.473 1.23 2.037 2.16c1.564.932 1.686 1.178 1.464 1.53s-3.675-2.511-4-1.297c-.323 1.214 3.524 1.567 3.287 2.405-.238.839-2.71-1.587-3.216-.642-.506.946 3.49 2.056 3.522 2.064 1.29.33 4.568 1.028 5.713-.624m5.349 0c-.824-1.19-.766-2.082.365-3.194 1.13-1.112 1.789-2.738 1.789-2.738s.246-.945.806-.858.97 1.499-.202 2.362c-1.173.864.233 1.45.685.64.451-.812 1.683-2.896 2.322-3.295s1.089-.175.938.647-2.822 2.813-2.562 3.244 1.176-.506 1.176-.506 2.866-2.567 3.49-1.898-.473 1.23-2.037 2.16c-1.564.932-1.686 1.178-1.464 1.53s3.675-2.511 4-1.297c.323 1.214-3.524 1.567-3.287 2.405.238.839 2.71-1.587 3.216-.642.506.946-3.49 2.056-3.522 2.064-1.29.33-4.568 1.028-5.713-.624" />
+    </symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24">
+      <path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z" />
+    </symbol>
+    <!-- The eight below front the In the Wild category tabs; glyphs from
+         Phosphor Icons (regular weight, MIT) — outline forms, pre-flattened
+         to fills, so they ride the same currentColor as everything else.
+         Which tab takes which is TAB_ICONS in .dev/tools/build_in_the_wild.py. -->
+    <symbol id="i-star" viewBox="0 0 256 256">
+      <path d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z" />
+    </symbol>
+    <symbol id="i-person" viewBox="0 0 256 256">
+      <path d="M152,80a32,32,0,1,0-32-32A32,32,0,0,0,152,80Zm0-48a16,16,0,1,1-16,16A16,16,0,0,1,152,32Zm64,112a8,8,0,0,1-8,8c-35.31,0-52.95-17.81-67.12-32.12-2.74-2.77-5.36-5.4-8-7.84l-13.43,30.88,37.2,26.57A8,8,0,0,1,160,176v56a8,8,0,0,1-16,0V180.12l-31.07-22.2L79.34,235.19A8,8,0,0,1,72,240a7.84,7.84,0,0,1-3.19-.67,8,8,0,0,1-4.15-10.52l54.08-124.37c-9.31-1.65-20.92,1.2-34.7,8.58a163.88,163.88,0,0,0-30.57,21.77,8,8,0,0,1-10.95-11.66c2.5-2.35,61.69-57.23,98.72-25.08,3.83,3.32,7.48,7,11,10.57C166.19,122.7,179.36,136,208,136A8,8,0,0,1,216,144Z"/>
+    </symbol>
+    <symbol id="i-ball" viewBox="0 0 256 256">
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm76.52,147.42H170.9l-9.26-12.76,12.63-36.78,15-4.89,26.24,20.13A87.38,87.38,0,0,1,204.52,171.42Zm-164-34.3L66.71,117l15,4.89,12.63,36.78L85.1,171.42H51.48A87.38,87.38,0,0,1,40.47,137.12Zm10-50.64,5.51,18.6L40.71,116.77A87.33,87.33,0,0,1,50.43,86.48ZM109,152,97.54,118.65,128,97.71l30.46,20.94L147,152Zm91.07-46.92,5.51-18.6a87.33,87.33,0,0,1,9.72,30.29Zm-6.2-35.38-9.51,32.08-15.07,4.89L136,83.79V68.21l29.09-20A88.58,88.58,0,0,1,193.86,69.7ZM146.07,41.87,128,54.29,109.93,41.87a88.24,88.24,0,0,1,36.14,0ZM90.91,48.21l29.09,20V83.79L86.72,106.67l-15.07-4.89L62.14,69.7A88.58,88.58,0,0,1,90.91,48.21ZM63.15,187.42H83.52l7.17,20.27A88.4,88.4,0,0,1,63.15,187.42ZM110,214.13,98.12,180.71,107.35,168h41.3l9.23,12.71-11.83,33.42a88,88,0,0,1-36.1,0Zm55.36-6.44,7.17-20.27h20.37A88.4,88.4,0,0,1,165.31,207.69Z"/>
+    </symbol>
+    <symbol id="i-mic" viewBox="0 0 256 256">
+      <path d="M168,16A72.07,72.07,0,0,0,96,88a73.29,73.29,0,0,0,.63,9.42L27.12,192.22A15.93,15.93,0,0,0,28.71,213L43,227.29a15.93,15.93,0,0,0,20.78,1.59l94.81-69.53A73.29,73.29,0,0,0,168,160a72,72,0,1,0,0-144Zm56,72a55.72,55.72,0,0,1-11.16,33.52L134.49,43.16A56,56,0,0,1,224,88ZM54.32,216,40,201.68,102.14,117A72.37,72.37,0,0,0,139,153.86ZM112,88a55.67,55.67,0,0,1,11.16-33.51l78.34,78.34A56,56,0,0,1,112,88Zm-2.35,58.34a8,8,0,0,1,0,11.31l-8,8a8,8,0,1,1-11.31-11.31l8-8A8,8,0,0,1,109.67,146.33Z" />
+    </symbol>
+    <symbol id="i-present" viewBox="0 0 256 256">
+      <path d="M216,40H136V24a8,8,0,0,0-16,0V40H40A16,16,0,0,0,24,56V176a16,16,0,0,0,16,16H79.36L57.75,219a8,8,0,0,0,12.5,10l29.59-37h56.32l29.59,37a8,8,0,1,0,12.5-10l-21.61-27H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,136H40V56H216V176Z"/>
+    </symbol>
+    <symbol id="i-dress" viewBox="0 0 256 256">
+      <path d="M214.7,209.7a1.89,1.89,0,0,0-.11-.25l-45.48-96.86,20.5-32.18a1.74,1.74,0,0,0,.11-.18,16,16,0,0,0,0-16.46c-.09-.16-.2-.32-.3-.47L168,32.7V8a8,8,0,0,0-16,0V32.42L146.74,39a24,24,0,0,1-37.48,0L104,32.42V8A8,8,0,0,0,88,8V32.7L66.58,63.3c-.1.15-.21.31-.3.47a16,16,0,0,0,0,16.46,1.74,1.74,0,0,0,.11.18l20.5,32.18L41.41,209.45a1.89,1.89,0,0,0-.11.25A16,16,0,0,0,56,232H200a16,16,0,0,0,14.71-22.3ZM80,72,96.43,48.57l.33.42a40,40,0,0,0,62.48,0l.33-.42L176,72l-20.38,32H100.39ZM56,216l45.07-96h53.84L200,216Z"/>
+    </symbol>
+    <symbol id="i-film" viewBox="0 0 256 256">
+      <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,88h80v80H40Zm96-16V56h32V72Zm-16,0H88V56h32Zm0,112v16H88V184Zm16,0h32v16H136Zm0-16V88h80v80Zm80-96H184V56h32ZM72,56V72H40V56ZM40,184H72v16H40Zm176,16H184V184h32v16Z"/>
+    </symbol>
+    <symbol id="i-robot" viewBox="0 0 256 256">
+      <path d="M200,48H136V16a8,8,0,0,0-16,0V48H56A32,32,0,0,0,24,80V192a32,32,0,0,0,32,32H200a32,32,0,0,0,32-32V80A32,32,0,0,0,200,48Zm16,144a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V80A16,16,0,0,1,56,64H200a16,16,0,0,1,16,16Zm-52-56H92a28,28,0,0,0,0,56h72a28,28,0,0,0,0-56Zm-24,16v24H116V152ZM80,164a12,12,0,0,1,12-12h8v24H92A12,12,0,0,1,80,164Zm84,12h-8V152h8a12,12,0,0,1,0,24ZM72,108a12,12,0,1,1,12,12A12,12,0,0,1,72,108Zm88,0a12,12,0,1,1,12,12A12,12,0,0,1,160,108Z"/>
+    </symbol>
+  </svg>
+
+  <!-- ====================================================================
+       Topbar — appears once the hero scrolls out of view
+       ==================================================================== -->
+  <header class="topbar" data-topbar>
+    <div class="topbar__pill">
+      <a class="topbar__brand" href="#top">
+        <img src="assets/images/logo.png" alt="" width="512" height="512">
+        <span>4DAnyone</span>
+      </a>
+      <nav class="topbar__nav" aria-label="Sections">
+        <a class="topbar__link" href="#overview">Overview</a>
+        <a class="topbar__link" href="#in-the-wild">Demo</a>
+        <a class="topbar__link" href="#method">Method</a>
+        <a class="topbar__link" href="#comparisons">Comparisons</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ==================================================================
+         Hero
+         ================================================================== -->
+    <section class="hero" data-topbar-trigger>
+      <div class="container">
+        <!-- A side-by-side lockup: logo left, two lines of title right, equal
+             height. On a phone it restacks — logo on its own row, the name on
+             one line (the colon leaves with the row layout), the subtitle on
+             two. -->
+        <h1 class="hero__title">
+          <img class="hero__logo" src="assets/images/logo.png" alt="" width="512" height="512">
+          <span class="hero__title-text">
+            <span class="hero__title-main">4DAnyone<span class="hero__title-colon">:</span></span>
+            <span class="hero__title-sub">Create Anyone in 4D<br class="hero__br--wide"> from<br class="hero__br--narrow"> a Casual Monocular Video</span>
+          </span>
+        </h1>
+
+        <!-- Order and marks mirror the paper; affiliations (several authors carry
+             two) follow the SIGGRAPH Asia Stage-3 form, which is the authority
+             where the two disagree. Numbers are in order of first appearance,
+             each author's primary institution listed first. -->
+        <div class="authors">
+          <span class="authors__item"><a href="https://krahets.com/">Yudong Jin</a><sup>1,2<span class="mark-star">*</span></sup></span>
+          <span class="authors__item"><a href="https://xbillowy.github.io/">Tao Xie</a><sup>1<span class="mark-star">*</span></sup></span>
+          <span class="authors__item"><a href="https://zqh0253.github.io/">Qihang Zhang</a><sup>2,5</sup></span>
+          <span class="authors__item"><a href="https://zehongs.github.io/">Zehong Shen</a><sup>3</sup></span>
+          <span class="authors__item"><a href="https://zhenx.me/">Zhen Xu</a><sup>1</sup></span>
+          <span class="authors__item"><a href="https://shenyujun.github.io/">Yujun Shen</a><sup>2</sup></span>
+          <span class="authors__item"><a href="http://www.cad.zju.edu.cn/home/bao/">Hujun Bao</a><sup>1</sup></span>
+          <span class="authors__item"><a href="https://xzhou.me/">Xiaowei Zhou</a><sup>1&dagger;</sup></span>
+          <span class="authors__item"><a href="https://justimyhxu.github.io/">Yinghao Xu</a><sup>2,4&dagger;</sup></span>
+        </div>
+
+        <div class="affiliations">
+          <span><sup>1</sup>&nbsp;Zhejiang University</span>
+          <span><sup>2</sup>&nbsp;Robbyant</span>
+          <span><sup>3</sup>&nbsp;Ant Group</span>
+          <span><sup>4</sup>&nbsp;HKUST</span>
+          <span><sup>5</sup>&nbsp;CUHK</span>
+        </div>
+        <p class="footnote">
+          <span><sup><span class="mark-star">*</span></sup>&nbsp;Equal contribution</span>
+          <span><sup>&dagger;</sup>&nbsp;Corresponding authors</span>
+        </p>
+
+        <p><span class="venue">SIGGRAPH Asia 2026</span></p>
+
+        <div class="actions">
+          <a class="button" href="https://arxiv.org/abs/2608.20335" target="_blank" rel="noopener">
+            <svg class="button__icon" aria-hidden="true"><use href="#i-arxiv" /></svg>
+            <span>Paper</span>
+          </a>
+          <a class="button" href="https://github.com/ant-research/4DAnyone" target="_blank" rel="noopener">
+            <svg class="button__icon" aria-hidden="true"><use href="#i-github" /></svg>
+            <span>Code</span>
+          </a>
+          <a class="button" href="https://huggingface.co/AntResearch/4DAnyone" target="_blank" rel="noopener">
+            <svg class="button__icon" aria-hidden="true"><use href="#i-huggingface" /></svg>
+            <span>Model</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="container hero__teaser">
+        <div class="frame">
+          <!-- No `autoplay`, and no bytes until teaser.js starts it: the film
+               is ~35 MB, and fetched from the first parse it starves every
+               small file on the shared connection — the whole Overview boot
+               is ~1.3 MB and measured 16 s+ behind it. teaser.js plays it
+               once the Overview settles; without scripts this is the poster
+               and a play button. -->
+          <video data-teaser poster="assets/images/teaser.jpg" controls loop muted playsinline preload="none">
+            <source src="assets/videos/teaser.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="caption caption--center caption--tagline">
+          Single video in, 4D human out. No rig, no calibration, no tripod.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         Overview — one continuous 3D scene, one step at a time
+
+         The section is #overview and the topbar calls it that; the heading is a
+         sentence rather than a name because it sits over a full viewport of 3D
+         and has a claim to make. Everything under it is still named `pipeline` —
+         the class, the data attributes, assets/js/pipeline/ — because that is
+         what the code draws. The two names are for two different things and
+         neither is going to move.
+
+         The markup below is the *no-JS* state and is the real content: a
+         poster and a plain list of generated views. assets/js/pipeline/ adds a
+         canvas on top of it only once three.js has loaded and a WebGL2 context
+         exists, and hides this list at that point. If any of that fails the
+         reader keeps the list rather than getting a blank rectangle.
+
+         data-pipeline-scene names a folder under assets/data/ and
+         assets/videos/overview/. Everything else — camera count, frame count,
+         frame rate, ring geometry — is read from that folder, never from here.
+         Exported scenes stay on that shelf when they stop being the hero, so
+         swapping one back in is this attribute and the six paths below it:
+         the still under assets/images/pipeline/<scene>, then the five videos.
+
+         The still is the scene's own 4DGS render, not the Method diagram it
+         used to be — a reader waiting out a slow boot read the diagram as
+         the Method figure sitting in the wrong section, and the diagram now
+         appears once, in Method, where it belongs. The still serves only the
+         reader who gets no canvas: during a boot the frame shows the
+         spinner chrome instead (layout.css holds the fallback back; the
+         still was tried there first and read as a page stuck on a picture).
+         ================================================================== -->
+    <section class="section" id="overview">
+      <!-- The head lives *inside* .pipeline rather than above it, because the
+           section is one viewport: a heading in normal flow above the canvas is
+           never on screen at the same time as the thing it names.
+           Static here for the no-canvas fallback, lifted over the scene by CSS
+           once the canvas is live.
+
+           No lead paragraph. The step switcher under the scene explains
+           whichever step the reader is on, which is what a lead would do at
+           less use. -->
+      <div class="pipeline" data-pipeline
+           data-pipeline-scene="douyin/wusan/7671567288083991860-seg000_30fps_start0127end0248">
+        <div class="pipeline__head">
+          <div class="container">
+            <h2>Lifting Casual Human Video into 4D</h2>
+          </div>
+        </div>
+        <div class="pipeline__fallback">
+          <div class="container">
+            <img class="figure" src="assets/images/pipeline/douyin/wusan/7671567288083991860-seg000_30fps_start0127end0248-render.jpg"
+                 alt="A frame of this scene's 4D Gaussian reconstruction, rendered from a generated viewpoint."
+                 width="704" height="1280">
+            <ul class="pipeline__views">
+              <li>
+                <video src="assets/videos/overview/douyin/wusan/7671567288083991860-seg000_30fps_start0127end0248/source.mp4"
+                       muted loop playsinline preload="none" controls></video>
+                <span class="caption">Input video</span>
+              </li>
+              <li>
+                <video src="assets/videos/overview/douyin/wusan/7671567288083991860-seg000_30fps_start0127end0248/gen_cam00.mp4"
+                       muted loop playsinline preload="none" controls></video>
+                <span class="caption">Generated view 00</span>
+              </li>
+              <li>
+                <video src="assets/videos/overview/douyin/wusan/7671567288083991860-seg000_30fps_start0127end0248/gen_cam08.mp4"
+                       muted loop playsinline preload="none" controls></video>
+                <span class="caption">Generated view 08</span>
+              </li>
+              <li>
+                <video src="assets/videos/overview/douyin/wusan/7671567288083991860-seg000_30fps_start0127end0248/gen_cam16.mp4"
+                       muted loop playsinline preload="none" controls></video>
+                <span class="caption">Generated view 16</span>
+              </li>
+              <li>
+                <video src="assets/videos/overview/douyin/wusan/7671567288083991860-seg000_30fps_start0127end0248/render_4dgs.mp4"
+                       muted loop playsinline preload="none" controls></video>
+                <span class="caption">4D Gaussian reconstruction</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         In the Wild — thumbnails swap the stage video
+
+         Same markup contract as Comparisons below: `data-gallery` with one
+         `[data-gallery-stage]` video and one <li> per clip, found by attribute.
+
+         What differs is who writes the <li>. There are a hundred-odd, and they
+         come from .dev/tools/build_in_the_wild.py, which reads a rated report tree
+         and rewrites everything between the two markers in the list below.
+         Adding or dropping a clip is a re-run of that script rather than an edit
+         here — README.md has the flags. Everything outside those markers is
+         hand-written and the script leaves it alone.
+         ================================================================== -->
+    <section class="section" id="in-the-wild">
+      <div class="container">
+        <div class="section__head">
+          <h2>In the Wild</h2>
+          <p class="section__lead">
+            4DAnyone generalizes robustly to diverse human-centric footage, producing
+            consistent target-view videos and high-quality 4DGS models from casual
+            monocular videos (mild camera motion, unknown camera intrinsics and poses).
+          </p>
+        </div>
+
+        <div data-gallery>
+          <!-- The stage is one video, not eight. The eight panels — source,
+               six generated views and reconstruction — sit under a title band
+               in one file built by .dev/tools/build_in_the_wild.py. Eight
+               <video> elements would carry eight decode clocks and drift apart,
+               undermining the multi-view claim. The title band, rounded zones
+               and flow arrows are baked so a downloaded clip reads on its own. -->
+          <div class="frame gallery__frame">
+            <!-- No poster attribute: clip filenames are content hashes that change
+                 with the report, and gallery.js sets the poster from the selected
+                 thumbnail at init anyway. A hardcoded name here is a broken image
+                 waiting to happen — it already happened once. -->
+            <video data-gallery-stage controls loop muted playsinline preload="metadata"
+              aria-label="Source video, generated target videos, and 4DGS rendering"></video>
+          </div>
+
+          <div class="gallery__meta">
+            <p class="caption">Recommend unmuting. All videos are downscaled for smooth loading.</p>
+            <label class="gallery__option">
+              Autoplay Next
+              <input class="gallery__switch" type="checkbox" role="switch"
+                data-gallery-autonext checked>
+            </label>
+          </div>
+
+          <!-- BEGIN generated by .dev/tools/build_in_the_wild.py -->
+          <div class="tabs gallery__tabs" data-tabs>
+            <div class="tabs__platter">
+              <div class="tabs__track" data-tabs-track>
+                <div class="tabs__rail" data-tabs-rail>
+                  <ul class="tabs__list" role="tablist" aria-label="Scene groups">
+                    <li class="tabs__item" role="presentation">
+                      <button class="tabs__tab" type="button" role="tab"
+                        id="itw-tab-featured" aria-controls="itw-panel-featured"
+                        aria-selected="true"><svg class="tabs__icon" aria-hidden="true"><use href="#i-star" /></svg>Featured</button>
+                    </li>
+                    <li class="tabs__item" role="presentation">
+                      <button class="tabs__tab" type="button" role="tab"
+                        id="itw-tab-dance" aria-controls="itw-panel-dance"
+                        aria-selected="false"><svg class="tabs__icon" aria-hidden="true"><use href="#i-person" /></svg>Dance</button>
+                    </li>
+                    <li class="tabs__item" role="presentation">
+                      <button class="tabs__tab" type="button" role="tab"
+                        id="itw-tab-character" aria-controls="itw-panel-character"
+                        aria-selected="false"><svg class="tabs__icon" aria-hidden="true"><use href="#i-film" /></svg>Character</button>
+                    </li>
+                    <li class="tabs__item" role="presentation">
+                      <button class="tabs__tab" type="button" role="tab"
+                        id="itw-tab-sports" aria-controls="itw-panel-sports"
+                        aria-selected="false"><svg class="tabs__icon" aria-hidden="true"><use href="#i-ball" /></svg>Sports</button>
+                    </li>
+                    <li class="tabs__item" role="presentation">
+                      <button class="tabs__tab" type="button" role="tab"
+                        id="itw-tab-stage" aria-controls="itw-panel-stage"
+                        aria-selected="false"><svg class="tabs__icon" aria-hidden="true"><use href="#i-mic" /></svg>Stage</button>
+                    </li>
+                    <li class="tabs__item" role="presentation">
+                      <button class="tabs__tab" type="button" role="tab"
+                        id="itw-tab-speech" aria-controls="itw-panel-speech"
+                        aria-selected="false"><svg class="tabs__icon" aria-hidden="true"><use href="#i-present" /></svg>Speech</button>
+                    </li>
+                    <li class="tabs__item" role="presentation">
+                      <button class="tabs__tab" type="button" role="tab"
+                        id="itw-tab-fashion" aria-controls="itw-panel-fashion"
+                        aria-selected="false"><svg class="tabs__icon" aria-hidden="true"><use href="#i-dress" /></svg>Fashion</button>
+                    </li>
+                    <li class="tabs__item" role="presentation">
+                      <button class="tabs__tab" type="button" role="tab"
+                        id="itw-tab-robot" aria-controls="itw-panel-robot"
+                        aria-selected="false"><svg class="tabs__icon" aria-hidden="true"><use href="#i-robot" /></svg>Robot</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tabs__panels">
+              <div class="tabs__panel" id="itw-panel-featured" role="tabpanel"
+                aria-labelledby="itw-tab-featured">
+                <h3 class="gallery__group-title">Featured</h3>
+                <ul class="gallery__thumbs gallery__thumbs--sheet" aria-label="Featured">
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="true"
+                      data-src="assets/videos/in-the-wild/clip-7a76c49254.mp4"
+                      data-poster="assets/images/in-the-wild/clip-7a76c49254-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-7a76c49254-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-7a76c49254.jpg" alt="Clip 1" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e6293bcfa7.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e6293bcfa7-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e6293bcfa7-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e6293bcfa7.jpg" alt="Clip 2" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-cc7cf52003.mp4"
+                      data-poster="assets/images/in-the-wild/clip-cc7cf52003-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-cc7cf52003-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-cc7cf52003.jpg" alt="Clip 3" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-c0bd5b6cfc.mp4"
+                      data-poster="assets/images/in-the-wild/clip-c0bd5b6cfc-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-c0bd5b6cfc-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-c0bd5b6cfc.jpg" alt="Clip 4" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-affbe73935.mp4"
+                      data-poster="assets/images/in-the-wild/clip-affbe73935-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-affbe73935-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-affbe73935.jpg" alt="Clip 5" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-7daed83dc2.mp4"
+                      data-poster="assets/images/in-the-wild/clip-7daed83dc2-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-7daed83dc2-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-7daed83dc2.jpg" alt="Clip 6" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8971372c26.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8971372c26-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8971372c26-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8971372c26.jpg" alt="Clip 7" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-fe6797e79f.mp4"
+                      data-poster="assets/images/in-the-wild/clip-fe6797e79f-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-fe6797e79f-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-fe6797e79f.jpg" alt="Clip 8" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-66de535122.mp4"
+                      data-poster="assets/images/in-the-wild/clip-66de535122-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-66de535122-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-66de535122.jpg" alt="Clip 9" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-760197f096.mp4"
+                      data-poster="assets/images/in-the-wild/clip-760197f096-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-760197f096-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-760197f096.jpg" alt="Clip 10" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-09e8722e34.mp4"
+                      data-poster="assets/images/in-the-wild/clip-09e8722e34-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-09e8722e34-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-09e8722e34.jpg" alt="Clip 11" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-85e3354d60.mp4"
+                      data-poster="assets/images/in-the-wild/clip-85e3354d60-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-85e3354d60-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-85e3354d60.jpg" alt="Clip 12" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4b6d4be5b0.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4b6d4be5b0-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4b6d4be5b0-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4b6d4be5b0.jpg" alt="Clip 13" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-d5e20cce12.mp4"
+                      data-poster="assets/images/in-the-wild/clip-d5e20cce12-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-d5e20cce12-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-d5e20cce12.jpg" alt="Clip 14" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2a1e0d40bf.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2a1e0d40bf-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2a1e0d40bf-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2a1e0d40bf.jpg" alt="Clip 15" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4fb6188b41.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4fb6188b41-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4fb6188b41-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4fb6188b41.jpg" alt="Clip 16" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-76da8ee8ac.mp4"
+                      data-poster="assets/images/in-the-wild/clip-76da8ee8ac-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-76da8ee8ac-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-76da8ee8ac.jpg" alt="Clip 17" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-587c26d749.mp4"
+                      data-poster="assets/images/in-the-wild/clip-587c26d749-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-587c26d749-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-587c26d749.jpg" alt="Clip 18" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-0a22374d33.mp4"
+                      data-poster="assets/images/in-the-wild/clip-0a22374d33-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-0a22374d33-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-0a22374d33.jpg" alt="Clip 19" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e7c6b11412.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e7c6b11412-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e7c6b11412-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e7c6b11412.jpg" alt="Clip 20" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e6f4f69107.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e6f4f69107-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e6f4f69107-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e6f4f69107.jpg" alt="Clip 21" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-0169794514.mp4"
+                      data-poster="assets/images/in-the-wild/clip-0169794514-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-0169794514-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-0169794514.jpg" alt="Clip 22" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-658616a727.mp4"
+                      data-poster="assets/images/in-the-wild/clip-658616a727-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-658616a727-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-658616a727.jpg" alt="Clip 23" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6486e99aa1.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6486e99aa1-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6486e99aa1-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6486e99aa1.jpg" alt="Clip 24" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b32f80bd9f.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b32f80bd9f-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b32f80bd9f-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b32f80bd9f.jpg" alt="Clip 25" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b3aa4f8f72.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b3aa4f8f72-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b3aa4f8f72-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b3aa4f8f72.jpg" alt="Clip 26" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-311913036b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-311913036b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-311913036b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-311913036b.jpg" alt="Clip 27" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e6497cad94.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e6497cad94-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e6497cad94-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e6497cad94.jpg" alt="Clip 28" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-68aa5db14b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-68aa5db14b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-68aa5db14b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-68aa5db14b.jpg" alt="Clip 29" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-9afa0971f4.mp4"
+                      data-poster="assets/images/in-the-wild/clip-9afa0971f4-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-9afa0971f4-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-9afa0971f4.jpg" alt="Clip 30" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-ef306fc0ea.mp4"
+                      data-poster="assets/images/in-the-wild/clip-ef306fc0ea-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-ef306fc0ea-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-ef306fc0ea.jpg" alt="Clip 31" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-74cf65ecec.mp4"
+                      data-poster="assets/images/in-the-wild/clip-74cf65ecec-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-74cf65ecec-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-74cf65ecec.jpg" alt="Clip 32" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b86e7299cf.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b86e7299cf-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b86e7299cf-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b86e7299cf.jpg" alt="Clip 33" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-eabb8951b4.mp4"
+                      data-poster="assets/images/in-the-wild/clip-eabb8951b4-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-eabb8951b4-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-eabb8951b4.jpg" alt="Clip 34" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e02d1eb275.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e02d1eb275-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e02d1eb275-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e02d1eb275.jpg" alt="Clip 35" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-008e703222.mp4"
+                      data-poster="assets/images/in-the-wild/clip-008e703222-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-008e703222-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-008e703222.jpg" alt="Clip 36" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2d7bd4f24a.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2d7bd4f24a-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2d7bd4f24a-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2d7bd4f24a.jpg" alt="Clip 37" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-447050bc1d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-447050bc1d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-447050bc1d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-447050bc1d.jpg" alt="Clip 38" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-bb37a712c3.mp4"
+                      data-poster="assets/images/in-the-wild/clip-bb37a712c3-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-bb37a712c3-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-bb37a712c3.jpg" alt="Clip 39" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2c693afb32.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2c693afb32-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2c693afb32-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2c693afb32.jpg" alt="Clip 40" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b03ab4a16e.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b03ab4a16e-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b03ab4a16e-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b03ab4a16e.jpg" alt="Clip 41" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-10266a20f9.mp4"
+                      data-poster="assets/images/in-the-wild/clip-10266a20f9-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-10266a20f9-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-10266a20f9.jpg" alt="Clip 42" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-10d7001964.mp4"
+                      data-poster="assets/images/in-the-wild/clip-10d7001964-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-10d7001964-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-10d7001964.jpg" alt="Clip 43" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8b3cfbe12b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8b3cfbe12b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8b3cfbe12b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8b3cfbe12b.jpg" alt="Clip 44" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-32b9aaa0ce.mp4"
+                      data-poster="assets/images/in-the-wild/clip-32b9aaa0ce-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-32b9aaa0ce-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-32b9aaa0ce.jpg" alt="Clip 45" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-0a5226742c.mp4"
+                      data-poster="assets/images/in-the-wild/clip-0a5226742c-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-0a5226742c-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-0a5226742c.jpg" alt="Clip 46" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="tabs__panel" id="itw-panel-dance" role="tabpanel"
+                aria-labelledby="itw-tab-dance">
+                <h3 class="gallery__group-title">Dance</h3>
+                <ul class="gallery__thumbs gallery__thumbs--sheet" aria-label="Dance">
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-fe6797e79f.mp4"
+                      data-poster="assets/images/in-the-wild/clip-fe6797e79f-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-fe6797e79f-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-fe6797e79f.jpg" alt="Clip 47" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-66de535122.mp4"
+                      data-poster="assets/images/in-the-wild/clip-66de535122-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-66de535122-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-66de535122.jpg" alt="Clip 48" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-76da8ee8ac.mp4"
+                      data-poster="assets/images/in-the-wild/clip-76da8ee8ac-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-76da8ee8ac-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-76da8ee8ac.jpg" alt="Clip 49" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e6f4f69107.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e6f4f69107-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e6f4f69107-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e6f4f69107.jpg" alt="Clip 50" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-d5e20cce12.mp4"
+                      data-poster="assets/images/in-the-wild/clip-d5e20cce12-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-d5e20cce12-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-d5e20cce12.jpg" alt="Clip 51" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-0169794514.mp4"
+                      data-poster="assets/images/in-the-wild/clip-0169794514-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-0169794514-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-0169794514.jpg" alt="Clip 52" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-760197f096.mp4"
+                      data-poster="assets/images/in-the-wild/clip-760197f096-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-760197f096-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-760197f096.jpg" alt="Clip 53" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4fb6188b41.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4fb6188b41-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4fb6188b41-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4fb6188b41.jpg" alt="Clip 54" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-09e8722e34.mp4"
+                      data-poster="assets/images/in-the-wild/clip-09e8722e34-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-09e8722e34-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-09e8722e34.jpg" alt="Clip 55" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b061c86675.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b061c86675-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b061c86675-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b061c86675.jpg" alt="Clip 56" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-85e3354d60.mp4"
+                      data-poster="assets/images/in-the-wild/clip-85e3354d60-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-85e3354d60-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-85e3354d60.jpg" alt="Clip 57" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6ee1f8f343.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6ee1f8f343-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6ee1f8f343-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6ee1f8f343.jpg" alt="Clip 58" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e6293bcfa7.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e6293bcfa7-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e6293bcfa7-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e6293bcfa7.jpg" alt="Clip 59" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-206500d996.mp4"
+                      data-poster="assets/images/in-the-wild/clip-206500d996-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-206500d996-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-206500d996.jpg" alt="Clip 60" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e83d41cc29.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e83d41cc29-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e83d41cc29-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e83d41cc29.jpg" alt="Clip 61" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-7a41476188.mp4"
+                      data-poster="assets/images/in-the-wild/clip-7a41476188-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-7a41476188-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-7a41476188.jpg" alt="Clip 62" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-c2f103b1ca.mp4"
+                      data-poster="assets/images/in-the-wild/clip-c2f103b1ca-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-c2f103b1ca-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-c2f103b1ca.jpg" alt="Clip 63" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b521a9dad7.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b521a9dad7-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b521a9dad7-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b521a9dad7.jpg" alt="Clip 64" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6e23659314.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6e23659314-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6e23659314-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6e23659314.jpg" alt="Clip 65" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-0c86a5a6cc.mp4"
+                      data-poster="assets/images/in-the-wild/clip-0c86a5a6cc-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-0c86a5a6cc-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-0c86a5a6cc.jpg" alt="Clip 66" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-bddc628083.mp4"
+                      data-poster="assets/images/in-the-wild/clip-bddc628083-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-bddc628083-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-bddc628083.jpg" alt="Clip 67" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e7c6b11412.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e7c6b11412-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e7c6b11412-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e7c6b11412.jpg" alt="Clip 68" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2cee756e2d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2cee756e2d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2cee756e2d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2cee756e2d.jpg" alt="Clip 69" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-79a0ffac23.mp4"
+                      data-poster="assets/images/in-the-wild/clip-79a0ffac23-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-79a0ffac23-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-79a0ffac23.jpg" alt="Clip 70" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-d7a67e1e61.mp4"
+                      data-poster="assets/images/in-the-wild/clip-d7a67e1e61-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-d7a67e1e61-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-d7a67e1e61.jpg" alt="Clip 71" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-537a400a44.mp4"
+                      data-poster="assets/images/in-the-wild/clip-537a400a44-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-537a400a44-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-537a400a44.jpg" alt="Clip 72" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-fb922fc34b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-fb922fc34b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-fb922fc34b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-fb922fc34b.jpg" alt="Clip 73" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6357aa640b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6357aa640b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6357aa640b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6357aa640b.jpg" alt="Clip 74" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-aafe117eb7.mp4"
+                      data-poster="assets/images/in-the-wild/clip-aafe117eb7-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-aafe117eb7-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-aafe117eb7.jpg" alt="Clip 75" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-99f6fe3553.mp4"
+                      data-poster="assets/images/in-the-wild/clip-99f6fe3553-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-99f6fe3553-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-99f6fe3553.jpg" alt="Clip 76" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-86a4f973bf.mp4"
+                      data-poster="assets/images/in-the-wild/clip-86a4f973bf-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-86a4f973bf-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-86a4f973bf.jpg" alt="Clip 77" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b5516ba257.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b5516ba257-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b5516ba257-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b5516ba257.jpg" alt="Clip 78" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4f26a08f3d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4f26a08f3d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4f26a08f3d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4f26a08f3d.jpg" alt="Clip 79" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-a919c0067d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-a919c0067d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-a919c0067d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-a919c0067d.jpg" alt="Clip 80" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-0552144574.mp4"
+                      data-poster="assets/images/in-the-wild/clip-0552144574-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-0552144574-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-0552144574.jpg" alt="Clip 81" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-64ff23433d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-64ff23433d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-64ff23433d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-64ff23433d.jpg" alt="Clip 82" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-52d1815002.mp4"
+                      data-poster="assets/images/in-the-wild/clip-52d1815002-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-52d1815002-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-52d1815002.jpg" alt="Clip 83" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4dde5dd849.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4dde5dd849-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4dde5dd849-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4dde5dd849.jpg" alt="Clip 84" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-42e1e673f5.mp4"
+                      data-poster="assets/images/in-the-wild/clip-42e1e673f5-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-42e1e673f5-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-42e1e673f5.jpg" alt="Clip 85" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-3b455cd72e.mp4"
+                      data-poster="assets/images/in-the-wild/clip-3b455cd72e-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-3b455cd72e-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-3b455cd72e.jpg" alt="Clip 86" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-49e6da1870.mp4"
+                      data-poster="assets/images/in-the-wild/clip-49e6da1870-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-49e6da1870-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-49e6da1870.jpg" alt="Clip 87" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-cfb1a73821.mp4"
+                      data-poster="assets/images/in-the-wild/clip-cfb1a73821-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-cfb1a73821-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-cfb1a73821.jpg" alt="Clip 88" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-73f388887e.mp4"
+                      data-poster="assets/images/in-the-wild/clip-73f388887e-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-73f388887e-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-73f388887e.jpg" alt="Clip 89" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-24dea5eb1f.mp4"
+                      data-poster="assets/images/in-the-wild/clip-24dea5eb1f-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-24dea5eb1f-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-24dea5eb1f.jpg" alt="Clip 90" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b108ff0a6f.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b108ff0a6f-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b108ff0a6f-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b108ff0a6f.jpg" alt="Clip 91" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-f8d3896ad4.mp4"
+                      data-poster="assets/images/in-the-wild/clip-f8d3896ad4-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-f8d3896ad4-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-f8d3896ad4.jpg" alt="Clip 92" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-3845643025.mp4"
+                      data-poster="assets/images/in-the-wild/clip-3845643025-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-3845643025-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-3845643025.jpg" alt="Clip 93" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b67ceca794.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b67ceca794-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b67ceca794-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b67ceca794.jpg" alt="Clip 94" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-16e2d9324a.mp4"
+                      data-poster="assets/images/in-the-wild/clip-16e2d9324a-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-16e2d9324a-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-16e2d9324a.jpg" alt="Clip 95" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-1c2e7e998e.mp4"
+                      data-poster="assets/images/in-the-wild/clip-1c2e7e998e-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-1c2e7e998e-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-1c2e7e998e.jpg" alt="Clip 96" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-484f0cff5c.mp4"
+                      data-poster="assets/images/in-the-wild/clip-484f0cff5c-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-484f0cff5c-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-484f0cff5c.jpg" alt="Clip 97" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-008e703222.mp4"
+                      data-poster="assets/images/in-the-wild/clip-008e703222-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-008e703222-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-008e703222.jpg" alt="Clip 98" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-af27c84ef0.mp4"
+                      data-poster="assets/images/in-the-wild/clip-af27c84ef0-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-af27c84ef0-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-af27c84ef0.jpg" alt="Clip 99" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-bb13515216.mp4"
+                      data-poster="assets/images/in-the-wild/clip-bb13515216-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-bb13515216-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-bb13515216.jpg" alt="Clip 100" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b4f7edc197.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b4f7edc197-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b4f7edc197-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b4f7edc197.jpg" alt="Clip 101" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-9b1ad228d2.mp4"
+                      data-poster="assets/images/in-the-wild/clip-9b1ad228d2-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-9b1ad228d2-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-9b1ad228d2.jpg" alt="Clip 102" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-c09f0bffec.mp4"
+                      data-poster="assets/images/in-the-wild/clip-c09f0bffec-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-c09f0bffec-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-c09f0bffec.jpg" alt="Clip 103" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-a9ca9b6bca.mp4"
+                      data-poster="assets/images/in-the-wild/clip-a9ca9b6bca-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-a9ca9b6bca-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-a9ca9b6bca.jpg" alt="Clip 104" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-9dd95b9bda.mp4"
+                      data-poster="assets/images/in-the-wild/clip-9dd95b9bda-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-9dd95b9bda-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-9dd95b9bda.jpg" alt="Clip 105" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b42bdb235d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b42bdb235d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b42bdb235d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b42bdb235d.jpg" alt="Clip 106" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8628a94549.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8628a94549-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8628a94549-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8628a94549.jpg" alt="Clip 107" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-883e3b999b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-883e3b999b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-883e3b999b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-883e3b999b.jpg" alt="Clip 108" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="tabs__panel" id="itw-panel-character" role="tabpanel"
+                aria-labelledby="itw-tab-character">
+                <h3 class="gallery__group-title">Character</h3>
+                <ul class="gallery__thumbs gallery__thumbs--sheet" aria-label="Character">
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-c0bd5b6cfc.mp4"
+                      data-poster="assets/images/in-the-wild/clip-c0bd5b6cfc-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-c0bd5b6cfc-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-c0bd5b6cfc.jpg" alt="Clip 109" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-affbe73935.mp4"
+                      data-poster="assets/images/in-the-wild/clip-affbe73935-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-affbe73935-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-affbe73935.jpg" alt="Clip 110" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-7daed83dc2.mp4"
+                      data-poster="assets/images/in-the-wild/clip-7daed83dc2-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-7daed83dc2-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-7daed83dc2.jpg" alt="Clip 111" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-658616a727.mp4"
+                      data-poster="assets/images/in-the-wild/clip-658616a727-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-658616a727-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-658616a727.jpg" alt="Clip 112" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8971372c26.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8971372c26-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8971372c26-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8971372c26.jpg" alt="Clip 113" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4b6d4be5b0.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4b6d4be5b0-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4b6d4be5b0-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4b6d4be5b0.jpg" alt="Clip 114" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8a7bf9280b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8a7bf9280b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8a7bf9280b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8a7bf9280b.jpg" alt="Clip 115" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-90125cb945.mp4"
+                      data-poster="assets/images/in-the-wild/clip-90125cb945-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-90125cb945-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-90125cb945.jpg" alt="Clip 116" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-447050bc1d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-447050bc1d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-447050bc1d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-447050bc1d.jpg" alt="Clip 117" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-19da8156f6.mp4"
+                      data-poster="assets/images/in-the-wild/clip-19da8156f6-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-19da8156f6-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-19da8156f6.jpg" alt="Clip 118" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8fe318e434.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8fe318e434-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8fe318e434-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8fe318e434.jpg" alt="Clip 119" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-1189b4dffb.mp4"
+                      data-poster="assets/images/in-the-wild/clip-1189b4dffb-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-1189b4dffb-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-1189b4dffb.jpg" alt="Clip 120" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-f7c886b49e.mp4"
+                      data-poster="assets/images/in-the-wild/clip-f7c886b49e-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-f7c886b49e-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-f7c886b49e.jpg" alt="Clip 121" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6a566e6458.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6a566e6458-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6a566e6458-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6a566e6458.jpg" alt="Clip 122" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-c0c2017697.mp4"
+                      data-poster="assets/images/in-the-wild/clip-c0c2017697-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-c0c2017697-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-c0c2017697.jpg" alt="Clip 123" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-94a7a2c307.mp4"
+                      data-poster="assets/images/in-the-wild/clip-94a7a2c307-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-94a7a2c307-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-94a7a2c307.jpg" alt="Clip 124" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-640f3e8206.mp4"
+                      data-poster="assets/images/in-the-wild/clip-640f3e8206-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-640f3e8206-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-640f3e8206.jpg" alt="Clip 125" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-00e12c7292.mp4"
+                      data-poster="assets/images/in-the-wild/clip-00e12c7292-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-00e12c7292-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-00e12c7292.jpg" alt="Clip 126" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-eabb8951b4.mp4"
+                      data-poster="assets/images/in-the-wild/clip-eabb8951b4-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-eabb8951b4-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-eabb8951b4.jpg" alt="Clip 127" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-5a445425f4.mp4"
+                      data-poster="assets/images/in-the-wild/clip-5a445425f4-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-5a445425f4-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-5a445425f4.jpg" alt="Clip 128" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e3575402d9.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e3575402d9-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e3575402d9-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e3575402d9.jpg" alt="Clip 129" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4d84dfaec9.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4d84dfaec9-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4d84dfaec9-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4d84dfaec9.jpg" alt="Clip 130" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-09a61aa528.mp4"
+                      data-poster="assets/images/in-the-wild/clip-09a61aa528-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-09a61aa528-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-09a61aa528.jpg" alt="Clip 131" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-7777f26238.mp4"
+                      data-poster="assets/images/in-the-wild/clip-7777f26238-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-7777f26238-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-7777f26238.jpg" alt="Clip 132" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-94634c0573.mp4"
+                      data-poster="assets/images/in-the-wild/clip-94634c0573-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-94634c0573-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-94634c0573.jpg" alt="Clip 133" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b6601d473d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b6601d473d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b6601d473d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b6601d473d.jpg" alt="Clip 134" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-315b8b2fe8.mp4"
+                      data-poster="assets/images/in-the-wild/clip-315b8b2fe8-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-315b8b2fe8-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-315b8b2fe8.jpg" alt="Clip 135" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="tabs__panel" id="itw-panel-sports" role="tabpanel"
+                aria-labelledby="itw-tab-sports">
+                <h3 class="gallery__group-title">Sports</h3>
+                <ul class="gallery__thumbs gallery__thumbs--sheet" aria-label="Sports">
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-cc7cf52003.mp4"
+                      data-poster="assets/images/in-the-wild/clip-cc7cf52003-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-cc7cf52003-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-cc7cf52003.jpg" alt="Clip 136" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-ef306fc0ea.mp4"
+                      data-poster="assets/images/in-the-wild/clip-ef306fc0ea-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-ef306fc0ea-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-ef306fc0ea.jpg" alt="Clip 137" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-9afa0971f4.mp4"
+                      data-poster="assets/images/in-the-wild/clip-9afa0971f4-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-9afa0971f4-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-9afa0971f4.jpg" alt="Clip 138" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-74cf65ecec.mp4"
+                      data-poster="assets/images/in-the-wild/clip-74cf65ecec-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-74cf65ecec-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-74cf65ecec.jpg" alt="Clip 139" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-3f85d26590.mp4"
+                      data-poster="assets/images/in-the-wild/clip-3f85d26590-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-3f85d26590-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-3f85d26590.jpg" alt="Clip 140" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b86e7299cf.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b86e7299cf-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b86e7299cf-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b86e7299cf.jpg" alt="Clip 141" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-87daca7507.mp4"
+                      data-poster="assets/images/in-the-wild/clip-87daca7507-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-87daca7507-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-87daca7507.jpg" alt="Clip 142" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-1c530f759d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-1c530f759d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-1c530f759d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-1c530f759d.jpg" alt="Clip 143" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e6497cad94.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e6497cad94-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e6497cad94-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e6497cad94.jpg" alt="Clip 144" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-68aa5db14b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-68aa5db14b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-68aa5db14b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-68aa5db14b.jpg" alt="Clip 145" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-a3143f89b6.mp4"
+                      data-poster="assets/images/in-the-wild/clip-a3143f89b6-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-a3143f89b6-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-a3143f89b6.jpg" alt="Clip 146" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-fd0b1393ec.mp4"
+                      data-poster="assets/images/in-the-wild/clip-fd0b1393ec-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-fd0b1393ec-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-fd0b1393ec.jpg" alt="Clip 147" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6b46cdabbb.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6b46cdabbb-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6b46cdabbb-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6b46cdabbb.jpg" alt="Clip 148" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-d9317c4b07.mp4"
+                      data-poster="assets/images/in-the-wild/clip-d9317c4b07-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-d9317c4b07-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-d9317c4b07.jpg" alt="Clip 149" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-424acf608b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-424acf608b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-424acf608b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-424acf608b.jpg" alt="Clip 150" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-132ab9a469.mp4"
+                      data-poster="assets/images/in-the-wild/clip-132ab9a469-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-132ab9a469-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-132ab9a469.jpg" alt="Clip 151" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-785bcec500.mp4"
+                      data-poster="assets/images/in-the-wild/clip-785bcec500-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-785bcec500-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-785bcec500.jpg" alt="Clip 152" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-533645bbda.mp4"
+                      data-poster="assets/images/in-the-wild/clip-533645bbda-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-533645bbda-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-533645bbda.jpg" alt="Clip 153" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-db8a8fdbbe.mp4"
+                      data-poster="assets/images/in-the-wild/clip-db8a8fdbbe-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-db8a8fdbbe-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-db8a8fdbbe.jpg" alt="Clip 154" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e02d1eb275.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e02d1eb275-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e02d1eb275-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e02d1eb275.jpg" alt="Clip 155" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-27df362e84.mp4"
+                      data-poster="assets/images/in-the-wild/clip-27df362e84-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-27df362e84-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-27df362e84.jpg" alt="Clip 156" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2cae3a7397.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2cae3a7397-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2cae3a7397-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2cae3a7397.jpg" alt="Clip 157" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-cf1ca81131.mp4"
+                      data-poster="assets/images/in-the-wild/clip-cf1ca81131-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-cf1ca81131-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-cf1ca81131.jpg" alt="Clip 158" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="tabs__panel" id="itw-panel-stage" role="tabpanel"
+                aria-labelledby="itw-tab-stage">
+                <h3 class="gallery__group-title">Stage</h3>
+                <ul class="gallery__thumbs gallery__thumbs--sheet" aria-label="Stage">
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-7a76c49254.mp4"
+                      data-poster="assets/images/in-the-wild/clip-7a76c49254-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-7a76c49254-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-7a76c49254.jpg" alt="Clip 159" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2a1e0d40bf.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2a1e0d40bf-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2a1e0d40bf-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2a1e0d40bf.jpg" alt="Clip 160" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-060efaa0af.mp4"
+                      data-poster="assets/images/in-the-wild/clip-060efaa0af-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-060efaa0af-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-060efaa0af.jpg" alt="Clip 161" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-de3a61149e.mp4"
+                      data-poster="assets/images/in-the-wild/clip-de3a61149e-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-de3a61149e-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-de3a61149e.jpg" alt="Clip 162" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-7e61c5717a.mp4"
+                      data-poster="assets/images/in-the-wild/clip-7e61c5717a-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-7e61c5717a-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-7e61c5717a.jpg" alt="Clip 163" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-f307ed8575.mp4"
+                      data-poster="assets/images/in-the-wild/clip-f307ed8575-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-f307ed8575-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-f307ed8575.jpg" alt="Clip 164" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-0a22374d33.mp4"
+                      data-poster="assets/images/in-the-wild/clip-0a22374d33-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-0a22374d33-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-0a22374d33.jpg" alt="Clip 165" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-56d3addbe6.mp4"
+                      data-poster="assets/images/in-the-wild/clip-56d3addbe6-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-56d3addbe6-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-56d3addbe6.jpg" alt="Clip 166" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-9f6b02fdb9.mp4"
+                      data-poster="assets/images/in-the-wild/clip-9f6b02fdb9-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-9f6b02fdb9-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-9f6b02fdb9.jpg" alt="Clip 167" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-fa7fb15c47.mp4"
+                      data-poster="assets/images/in-the-wild/clip-fa7fb15c47-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-fa7fb15c47-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-fa7fb15c47.jpg" alt="Clip 168" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-d8036a8ccd.mp4"
+                      data-poster="assets/images/in-the-wild/clip-d8036a8ccd-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-d8036a8ccd-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-d8036a8ccd.jpg" alt="Clip 169" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8b3dba948b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8b3dba948b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8b3dba948b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8b3dba948b.jpg" alt="Clip 170" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b4b4a31ed1.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b4b4a31ed1-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b4b4a31ed1-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b4b4a31ed1.jpg" alt="Clip 171" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4a0b076726.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4a0b076726-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4a0b076726-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4a0b076726.jpg" alt="Clip 172" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-4d3a6c9d70.mp4"
+                      data-poster="assets/images/in-the-wild/clip-4d3a6c9d70-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-4d3a6c9d70-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-4d3a6c9d70.jpg" alt="Clip 173" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b1ea861f33.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b1ea861f33-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b1ea861f33-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b1ea861f33.jpg" alt="Clip 174" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8b1f4103d5.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8b1f4103d5-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8b1f4103d5-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8b1f4103d5.jpg" alt="Clip 175" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-11eeb20c2c.mp4"
+                      data-poster="assets/images/in-the-wild/clip-11eeb20c2c-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-11eeb20c2c-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-11eeb20c2c.jpg" alt="Clip 176" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-1d3a06c671.mp4"
+                      data-poster="assets/images/in-the-wild/clip-1d3a06c671-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-1d3a06c671-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-1d3a06c671.jpg" alt="Clip 177" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-3ec74f303d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-3ec74f303d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-3ec74f303d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-3ec74f303d.jpg" alt="Clip 178" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-f7c3ccb132.mp4"
+                      data-poster="assets/images/in-the-wild/clip-f7c3ccb132-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-f7c3ccb132-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-f7c3ccb132.jpg" alt="Clip 179" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-723277871c.mp4"
+                      data-poster="assets/images/in-the-wild/clip-723277871c-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-723277871c-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-723277871c.jpg" alt="Clip 180" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-02191fa42b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-02191fa42b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-02191fa42b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-02191fa42b.jpg" alt="Clip 181" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b8ba01cafe.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b8ba01cafe-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b8ba01cafe-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b8ba01cafe.jpg" alt="Clip 182" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="tabs__panel" id="itw-panel-speech" role="tabpanel"
+                aria-labelledby="itw-tab-speech">
+                <h3 class="gallery__group-title">Speech</h3>
+                <ul class="gallery__thumbs gallery__thumbs--sheet" aria-label="Speech">
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6486e99aa1.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6486e99aa1-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6486e99aa1-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6486e99aa1.jpg" alt="Clip 183" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b32f80bd9f.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b32f80bd9f-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b32f80bd9f-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b32f80bd9f.jpg" alt="Clip 184" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b3aa4f8f72.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b3aa4f8f72-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b3aa4f8f72-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b3aa4f8f72.jpg" alt="Clip 185" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-ec814ec5de.mp4"
+                      data-poster="assets/images/in-the-wild/clip-ec814ec5de-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-ec814ec5de-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-ec814ec5de.jpg" alt="Clip 186" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-485080dcb0.mp4"
+                      data-poster="assets/images/in-the-wild/clip-485080dcb0-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-485080dcb0-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-485080dcb0.jpg" alt="Clip 187" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-eb5f380f61.mp4"
+                      data-poster="assets/images/in-the-wild/clip-eb5f380f61-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-eb5f380f61-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-eb5f380f61.jpg" alt="Clip 188" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6430542596.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6430542596-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6430542596-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6430542596.jpg" alt="Clip 189" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-909a69fe98.mp4"
+                      data-poster="assets/images/in-the-wild/clip-909a69fe98-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-909a69fe98-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-909a69fe98.jpg" alt="Clip 190" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-fc46bebd37.mp4"
+                      data-poster="assets/images/in-the-wild/clip-fc46bebd37-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-fc46bebd37-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-fc46bebd37.jpg" alt="Clip 191" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-1e462b38c8.mp4"
+                      data-poster="assets/images/in-the-wild/clip-1e462b38c8-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-1e462b38c8-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-1e462b38c8.jpg" alt="Clip 192" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-311913036b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-311913036b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-311913036b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-311913036b.jpg" alt="Clip 193" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b027aded19.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b027aded19-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b027aded19-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b027aded19.jpg" alt="Clip 194" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="tabs__panel" id="itw-panel-fashion" role="tabpanel"
+                aria-labelledby="itw-tab-fashion">
+                <h3 class="gallery__group-title">Fashion</h3>
+                <ul class="gallery__thumbs gallery__thumbs--sheet" aria-label="Fashion">
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-587c26d749.mp4"
+                      data-poster="assets/images/in-the-wild/clip-587c26d749-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-587c26d749-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-587c26d749.jpg" alt="Clip 195" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2c36f8f213.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2c36f8f213-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2c36f8f213-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2c36f8f213.jpg" alt="Clip 196" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-04d06eece7.mp4"
+                      data-poster="assets/images/in-the-wild/clip-04d06eece7-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-04d06eece7-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-04d06eece7.jpg" alt="Clip 197" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-7d03fee6cf.mp4"
+                      data-poster="assets/images/in-the-wild/clip-7d03fee6cf-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-7d03fee6cf-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-7d03fee6cf.jpg" alt="Clip 198" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2d7bd4f24a.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2d7bd4f24a-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2d7bd4f24a-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2d7bd4f24a.jpg" alt="Clip 199" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-75d7ac9a4b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-75d7ac9a4b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-75d7ac9a4b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-75d7ac9a4b.jpg" alt="Clip 200" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-3b00887900.mp4"
+                      data-poster="assets/images/in-the-wild/clip-3b00887900-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-3b00887900-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-3b00887900.jpg" alt="Clip 201" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-955871822c.mp4"
+                      data-poster="assets/images/in-the-wild/clip-955871822c-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-955871822c-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-955871822c.jpg" alt="Clip 202" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-376f9a0f0d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-376f9a0f0d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-376f9a0f0d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-376f9a0f0d.jpg" alt="Clip 203" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-93782332c9.mp4"
+                      data-poster="assets/images/in-the-wild/clip-93782332c9-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-93782332c9-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-93782332c9.jpg" alt="Clip 204" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-f00c0ec850.mp4"
+                      data-poster="assets/images/in-the-wild/clip-f00c0ec850-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-f00c0ec850-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-f00c0ec850.jpg" alt="Clip 205" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-1ca1df923d.mp4"
+                      data-poster="assets/images/in-the-wild/clip-1ca1df923d-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-1ca1df923d-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-1ca1df923d.jpg" alt="Clip 206" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-75f8fb8ceb.mp4"
+                      data-poster="assets/images/in-the-wild/clip-75f8fb8ceb-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-75f8fb8ceb-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-75f8fb8ceb.jpg" alt="Clip 207" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-33a23d21a8.mp4"
+                      data-poster="assets/images/in-the-wild/clip-33a23d21a8-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-33a23d21a8-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-33a23d21a8.jpg" alt="Clip 208" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2c03519cb9.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2c03519cb9-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2c03519cb9-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2c03519cb9.jpg" alt="Clip 209" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-e9f57b32a6.mp4"
+                      data-poster="assets/images/in-the-wild/clip-e9f57b32a6-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-e9f57b32a6-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-e9f57b32a6.jpg" alt="Clip 210" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-6b12eebcef.mp4"
+                      data-poster="assets/images/in-the-wild/clip-6b12eebcef-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-6b12eebcef-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-6b12eebcef.jpg" alt="Clip 211" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="tabs__panel" id="itw-panel-robot" role="tabpanel"
+                aria-labelledby="itw-tab-robot">
+                <h3 class="gallery__group-title">Robot</h3>
+                <ul class="gallery__thumbs gallery__thumbs--sheet" aria-label="Robot">
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-bb37a712c3.mp4"
+                      data-poster="assets/images/in-the-wild/clip-bb37a712c3-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-bb37a712c3-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-bb37a712c3.jpg" alt="Clip 212" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-10266a20f9.mp4"
+                      data-poster="assets/images/in-the-wild/clip-10266a20f9-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-10266a20f9-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-10266a20f9.jpg" alt="Clip 213" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-10d7001964.mp4"
+                      data-poster="assets/images/in-the-wild/clip-10d7001964-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-10d7001964-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-10d7001964.jpg" alt="Clip 214" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-2c693afb32.mp4"
+                      data-poster="assets/images/in-the-wild/clip-2c693afb32-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-2c693afb32-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-2c693afb32.jpg" alt="Clip 215" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-b03ab4a16e.mp4"
+                      data-poster="assets/images/in-the-wild/clip-b03ab4a16e-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-b03ab4a16e-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-b03ab4a16e.jpg" alt="Clip 216" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-132ffc35fc.mp4"
+                      data-poster="assets/images/in-the-wild/clip-132ffc35fc-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-132ffc35fc-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-132ffc35fc.jpg" alt="Clip 217" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-32b9aaa0ce.mp4"
+                      data-poster="assets/images/in-the-wild/clip-32b9aaa0ce-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-32b9aaa0ce-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-32b9aaa0ce.jpg" alt="Clip 218" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-0a5226742c.mp4"
+                      data-poster="assets/images/in-the-wild/clip-0a5226742c-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-0a5226742c-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-0a5226742c.jpg" alt="Clip 219" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="gallery__thumb" type="button" aria-pressed="false"
+                      data-src="assets/videos/in-the-wild/clip-8b3cfbe12b.mp4"
+                      data-poster="assets/images/in-the-wild/clip-8b3cfbe12b-poster.jpg"
+                      data-preview="assets/videos/in-the-wild/clip-8b3cfbe12b-pill.mp4">
+                      <img src="assets/images/in-the-wild/clip-8b3cfbe12b.jpg" alt="Clip 220" width="264" height="480"
+                        loading="lazy">
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- END generated by .dev/tools/build_in_the_wild.py -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         Method
+         ================================================================== -->
+    <section class="section" id="method">
+      <div class="container">
+        <div class="section__head">
+          <h2>Method</h2>
+          <p class="section__lead">
+            A photorealistic 4D human is normally reconstructed from a calibrated array of
+            synchronised cameras, which severely limits real-world use. 4DAnyone instead
+            creates one from a single casually captured video, by generating the videos that
+            array would have recorded.
+          </p>
+        </div>
+
+        <p class="prose">
+          The hard part is consistency at reconstruction scale: training 4DGS needs tens of
+          views, but limited computing resources force generation into groups, leading to
+          cross-group structural drift. We address this on two fronts:
+        </p>
+
+        <ul class="prose">
+          <li><strong>Scalable multiview consistency</strong>: Reference Context Packing
+            (RCP) compresses the linearly growing reference context into a fixed budget, and
+            Target Context Routing (TCR) routes context across the disjoint groups to enable
+            cross-group structural communication.</li>
+          <li><strong>Robust geometry conditioning</strong>: For generative models, conditioning
+            accuracy matters far more than density. A 3D skeleton provides sparse yet accurate
+            geometric cues without relying on fragile metric-depth estimates or noisy camera
+            parameters, enabling strong in-the-wild generalization.</li>
+        </ul>
+
+        <img class="figure method__figure" src="assets/images/pipeline.jpg"
+          width="1920" height="972"
+          alt="A source video is turned into skeleton-conditioned target-view tokens. Reference
+            Context Packing supplies compact reference tokens, Target Context Routing exchanges
+            information among target-view groups, and the generated multiview videos are
+            reconstructed as a 4D Gaussian Splatting model.">
+        <p class="caption">
+          The source video yields a 3D skeleton that guides generation at every target view.
+          Generated views feed back as RCP references, TCR routes the groups, and the final
+          videos train a 4DGS model with FreeTimeGS.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         Comparisons — thumbnails swap the stage video
+         ================================================================== -->
+    <section class="section" id="comparisons">
+      <div class="container">
+        <div class="section__head">
+          <h2>Comparisons</h2>
+          <p class="section__lead">
+            4DAnyone outperforms prior SoTA methods in both novel-view video quality and
+            downstream 4DGS reconstruction.
+          </p>
+        </div>
+
+        <div data-gallery>
+          <div class="frame">
+            <video data-gallery-stage controls loop muted playsinline preload="metadata"
+              poster="assets/images/comparisons/stage.jpg"></video>
+          </div>
+
+          <!-- One <li> per scene; the six clips are cut from the paper's own comparison
+               reel by .dev/tools/split_comparisons.py. data-src is the clip, data-poster the
+               shared stage poster, and the thumbnail is the clip's "ours" panel. -->
+          <ul class="gallery__thumbs" aria-label="Choose a scene">
+            <li>
+              <button class="gallery__thumb" type="button" aria-pressed="true"
+                data-src="assets/videos/comparisons/scene-01.mp4"
+                data-poster="assets/images/comparisons/stage.jpg">
+                <img src="assets/images/comparisons/scene-01.jpg" alt="Scene 1" width="270" height="480"
+                  loading="lazy">
+              </button>
+            </li>
+            <li>
+              <button class="gallery__thumb" type="button" aria-pressed="false"
+                data-src="assets/videos/comparisons/scene-02.mp4"
+                data-poster="assets/images/comparisons/stage.jpg">
+                <img src="assets/images/comparisons/scene-02.jpg" alt="Scene 2" width="270" height="480"
+                  loading="lazy">
+              </button>
+            </li>
+            <li>
+              <button class="gallery__thumb" type="button" aria-pressed="false"
+                data-src="assets/videos/comparisons/scene-03.mp4"
+                data-poster="assets/images/comparisons/stage.jpg">
+                <img src="assets/images/comparisons/scene-03.jpg" alt="Scene 3" width="270" height="480"
+                  loading="lazy">
+              </button>
+            </li>
+            <li>
+              <button class="gallery__thumb" type="button" aria-pressed="false"
+                data-src="assets/videos/comparisons/scene-04.mp4"
+                data-poster="assets/images/comparisons/stage.jpg">
+                <img src="assets/images/comparisons/scene-04.jpg" alt="Scene 4" width="270" height="480"
+                  loading="lazy">
+              </button>
+            </li>
+            <li>
+              <button class="gallery__thumb" type="button" aria-pressed="false"
+                data-src="assets/videos/comparisons/scene-05.mp4"
+                data-poster="assets/images/comparisons/stage.jpg">
+                <img src="assets/images/comparisons/scene-05.jpg" alt="Scene 5" width="270" height="480"
+                  loading="lazy">
+              </button>
+            </li>
+            <li>
+              <button class="gallery__thumb" type="button" aria-pressed="false"
+                data-src="assets/videos/comparisons/scene-06.mp4"
+                data-poster="assets/images/comparisons/stage.jpg">
+                <img src="assets/images/comparisons/scene-06.jpg" alt="Scene 6" width="270" height="480"
+                  loading="lazy">
+              </button>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         Acknowledgements
+         ================================================================== -->
+    <section class="section" id="acknowledgements">
+      <div class="container">
+        <div class="section__head section__head--left">
+          <h2>Acknowledgements</h2>
+        </div>
+        <p class="prose">
+          We would like to thank Sida Peng, Dingkun Wei, Haotong Lin, Shuaiting Li, Zelin Gao,
+          Yifan Yang, Yifan Wang, and Taoming Liu for their insightful discussions.
+        </p>
+        <p class="prose">
+          We also thank <a href="https://x.com/pablovelagomez1" target="_blank"
+            rel="noopener">Pablo Vela</a> for his insights on inference acceleration and for
+          building the <a href="https://huggingface.co/spaces/pablovela5620/4danyone-rerun"
+            target="_blank" rel="noopener">4DAnyone–Rerun</a> Hugging Face Space, and
+          <a href="https://x.com/jamesckane" target="_blank" rel="noopener">James C. Kane</a>
+          for building a 4DGS player for 4DAnyone. We are working to make 4DAnyone faster and
+          easier to use on consumer-grade hardware.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         BibTeX
+         ================================================================== -->
+    <section class="section" id="bibtex">
+      <div class="container">
+        <div class="section__head section__head--left">
+          <h2>BibTeX</h2>
+        </div>
+
+        <div class="code">
+          <button class="button button--ghost button--sm code__copy" type="button" data-copy="#bibtex-entry">
+            <svg class="button__icon" aria-hidden="true"><use href="#i-copy" /></svg>
+            <span data-copy-label>Copy</span>
+          </button>
+          <!-- Keep the arXiv form until the paper is formally in the
+               proceedings; then this becomes
+               booktitle={SIGGRAPH Asia Conference Proceedings} with the year,
+               in the same compact style. -->
+          <pre><code id="bibtex-entry">@article{jin2026fdanyone,
+  title={4DAnyone: Create Anyone in 4D from a Casual Monocular Video},
+  author={Jin, Yudong and Xie, Tao and Zhang, Qihang and Shen, Zehong and Xu, Zhen and Shen, Yujun and Bao, Hujun and Zhou, Xiaowei and Xu, Yinghao},
+  journal={arXiv preprint arXiv:2608.20335},
+  year={2026},
+  url={https://arxiv.org/abs/2608.20335}
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Page content licensed under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>.</p>
+
+    </div>
+  </footer>
+</body>
+
+</html>
